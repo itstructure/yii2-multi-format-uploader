@@ -4,6 +4,13 @@ Yii2 Multi format uploader module
 1 Introduction
 ----------------------------
 
+[![Latest Stable Version](https://poser.pugx.org/itstructure/yii2-multi-format-uploader/v/stable)](https://packagist.org/packages/itstructure/yii2-multi-format-uploader)
+[![Latest Unstable Version](https://poser.pugx.org/itstructure/yii2-multi-format-uploader/v/unstable)](https://packagist.org/packages/itstructure/yii2-multi-format-uploader)
+[![License](https://poser.pugx.org/itstructure/yii2-multi-format-uploader/license)](https://packagist.org/packages/itstructure/yii2-multi-format-uploader)
+[![Total Downloads](https://poser.pugx.org/itstructure/yii2-multi-format-uploader/downloads)](https://packagist.org/packages/itstructure/yii2-multi-format-uploader)
+[![Build Status](https://scrutinizer-ci.com/g/itstructure/yii2-multi-format-uploader/badges/build.png?b=master)](https://scrutinizer-ci.com/g/itstructure/yii2-multi-format-uploader/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/itstructure/yii2-multi-format-uploader/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/itstructure/yii2-multi-format-uploader/?branch=master)
+
 **MFUploader** -- Module for the Yii2 Framework to upload some type of files to local or S3 Amazon storage.
 MFUploader module provides the following options:
 - Upload files to local storage.
