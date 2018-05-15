@@ -1,0 +1,28 @@
+{
+    "name": "itstructure/yii2-multi-format-uploader",
+    "description": "Module for Yii2 Framework to upload some type of files to local or S3 Amazon storage",
+    "type": "package",
+    "keywords": ["yii2", "yii 2", "upload", "local", "amazon", "file", "module"],
+    "require": {
+        "php": ">=7.1.0",
+        "yiisoft/yii2": "2.*",
+        "yiisoft/yii2-bootstrap": "^2.0",
+        "yiisoft/yii2-imagine": "~2.1.0",
+        "aws/aws-sdk-php": "~3.55.7",
+        "itstructure/yii2-field-widgets": "^1.2.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrey Girnik",
+            "email": "girnikandrey@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Itstructure\\MFUploader\\": "src/"
+        }
+    }
+}

@@ -1,0 +1,49 @@
+/* WORKSPACE */
+#workspace img {
+  max-width: 128px;
+}
+#workspace .input-group {
+  position: relative;
+  margin-top: 5px;
+}
+#workspace .input-group input {
+  width: 425px;
+}
+#workspace .input-group textarea {
+  width: 855px;
+}
+#workspace .input-group textarea {
+  height: 48px;
+}
+#workspace .input-group span.input-group-addon {
+  width: 90px;
+}
+#workspace .visible {
+  visibility: visible;
+}
+#workspace .hidden {
+  visibility: hidden;
+}
+
+/* UPLOAD MANAGER */
+#uploadmanager #buttons {
+  margin-bottom: 10px;
+}
+#uploadmanager .progress {
+  margin-top: 10px;
+}
+#uploadmanager div[role="progress-block"] {
+  max-width: 600px;
+}
+#uploadmanager #workspace div.popup {
+  font-weight: bold;
+}
+#uploadmanager #workspace div.popup.error {
+  color: red;
+}
+#uploadmanager #workspace div.popup.success {
+  color: green;
+}
+div[role="button-block-delete"]{
+  display: none;
+}
