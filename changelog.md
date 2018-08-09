@@ -1,5 +1,15 @@
 ### CHANGE LOG:
 
+**2.0.0 August 9, 2018:**
+- Code fixes according with the PSR standards:
+    - Correct in functions **){** to **) {**.
+    - Add space before and after the **@param** function comment option.
+    - Renaming controllers and models to a single entity name.
+    - Renaming module constants.
+    - Some simple code fixes.
+-  Add file_exists() check function in to sendFile() of the LocalUpload model.
+- Fixes for README.
+
 **1.0.0 May 15, 2018:**
 - Create module with the following options:
     - Upload files to local storage.

@@ -38,19 +38,43 @@ To work with Amazon it uses [AWS SDK](https://github.com/aws/aws-sdk-php).
 
 Via composer:
 
-```composer require "itstructure/yii2-multi-format-uploader": "^1.0.0"```
+```composer require "itstructure/yii2-multi-format-uploader": "^2.0.0"```
 
 or in section **require** of composer.json file set the following:
 ```
 "require": {
-    "itstructure/yii2-multi-format-uploader": "^1.0.0"
+    "itstructure/yii2-multi-format-uploader": "^2.0.0"
 }
 ```
 and command ```composer install```, if you install yii2 project extensions first,
 
 or command ```composer update```, if all yii2 project extensions are already installed.
 
-### 3.2 Apply module migrations
+### 3.2 If you are testing this package from local server directory
+
+In application ```composer.json``` file set the repository, like in example:
+
+```
+"repositories": [
+    {
+        "type": "path",
+        "url": "../yii2-multi-format-uploader",
+        "options": {
+            "symlink": true
+        }
+    }
+],
+```
+
+Here,
+
+**yii2-multi-format-uploader** - directory name, which has the same directory level like application and contains yii2 multi format uploader package.
+
+Then run command:
+
+```composer require itstructure/yii2-multi-format-uploader:dev-master --prefer-source```
+
+### 3.3 Apply module migrations
 
 For that make next, **if not already done**:
     
@@ -118,7 +142,7 @@ Base application config must be like in example below:
 
 ```php
 use Itstructure\MFUploader\Module as MFUModule;
-use Itstructure\MFUploader\controllers\ManagersController;
+use Itstructure\MFUploader\controllers\ManagerController;
 use Itstructure\MFUploader\controllers\upload\{
     LocalUploadController,
     S3UploadController
@@ -146,7 +170,7 @@ use Itstructure\MFUploader\components\{
         'controllerMap' => [ // CUSTOM
             'upload/local-upload' => LocalUploadController::class,
             'upload/s3-upload' => S3UploadController::class,
-            'managers' => ManagersController::class,
+            'managers' => ManagerController::class,
             'image-album' => ImageAlbumController::class,
             'audio-album' => AudioAlbumController::class,
             'video-album' => VideoAlbumController::class,
@@ -218,7 +242,7 @@ echo FileSetter::widget([
     'ownerId' => {current owner id, post id, page id e.t.c.},
     'ownerAttribute' => UploadModelInterface::FILE_TYPE_IMAGE,
     'subDir' => 'post' // can be page, article, catalog e.t.c...
-]); ?>
+]);
 ```
 
 ### 4.4 Configure upload components
