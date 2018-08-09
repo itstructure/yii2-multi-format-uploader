@@ -360,12 +360,13 @@ class Module extends BaseModule
             return [];
         }
 
-        if (!isset($this->previewOptions[$fileType][$location]) ||
-            !is_array($this->previewOptions[$fileType][$location])) {
+        $previewOptions = $this->previewOptions[$fileType];
+
+        if (!isset($previewOptions[$location]) || !is_array($previewOptions[$location])) {
             return [];
         }
 
-        return $this->previewOptions[$fileType][$location];
+        return $previewOptions[$location];
     }
 
     /**

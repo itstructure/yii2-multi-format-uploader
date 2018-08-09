@@ -16,7 +16,7 @@ use yii\base\InvalidArgumentException;
  *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
-class Owner extends \yii\db\ActiveRecord
+abstract class Owner extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -57,6 +57,54 @@ class Owner extends \yii\db\ActiveRecord
             'owner' => 'Owner',
             'ownerAttribute' => 'Owner Attribute',
         ];
+    }
+
+    /**
+     * Get model (mediafile/album) primary key name.
+     *
+     * @return string
+     */
+    abstract protected static function getModelKeyName(): string;
+
+    /**
+     * Add owner to mediafiles table.
+     *
+     * @param int    $modelId
+     * @param int    $ownerId
+     * @param string $owner
+     * @param string $ownerAttribute
+     *
+     * @return bool
+     */
+    public static function addOwner(int $modelId, int $ownerId, string $owner, string $ownerAttribute): bool
+    {
+        $ownerModel = new static();
+        $ownerModel->{static::getModelKeyName()} = $modelId;
+        $ownerModel->ownerId = $ownerId;
+        $ownerModel->owner = $owner;
+        $ownerModel->ownerAttribute = $ownerAttribute;
+
+        return $ownerModel->save();
+    }
+
+    /**
+     * Remove this mediafile/album owner.
+     *
+     * @param int $ownerId
+     * @param string $owner
+     * @param string $ownerAttribute
+     *
+     * @return bool
+     */
+    public static function removeOwner(int $ownerId, string $owner, string $ownerAttribute): bool
+    {
+        $deleted = static::deleteAll([
+            'ownerId' => $ownerId,
+            'owner' => $owner,
+            'ownerAttribute' => $ownerAttribute,
+        ]);
+
+        return $deleted > 0;
     }
 
     /**

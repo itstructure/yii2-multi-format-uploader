@@ -194,4 +194,14 @@ class OwnerAlbum extends Owner
     {
         return static::getAlbums($owner, $ownerId, Album::ALBUM_TYPE_OTHER);
     }
+
+    /**
+     * Get model album primary key name.
+     *
+     * @return string
+     */
+    protected static function getModelKeyName(): string
+    {
+        return 'albumId';
+    }
 }

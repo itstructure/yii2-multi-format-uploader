@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**2.0.1 August 9, 2018:**
+- Delete duplicates and optimize code.
+
 **2.0.0 August 9, 2018:**
 - Code fixes according with the PSR standards:
     - Correct in functions **){** to **) {**.
@@ -7,7 +10,7 @@
     - Renaming controllers and models to a single entity name.
     - Renaming module constants.
     - Some simple code fixes.
--  Add file_exists() check function in to sendFile() of the LocalUpload model.
+- Add file_exists() check function in to sendFile() of the LocalUpload model.
 - Fixes for README.
 
 **1.0.0 May 15, 2018:**

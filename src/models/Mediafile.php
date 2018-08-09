@@ -165,13 +165,7 @@ class Mediafile extends ActiveRecord
      */
     public function addOwner(int $ownerId, string $owner, string $ownerAttribute): bool
     {
-        $ownerMediafile = new OwnerMediafile();
-        $ownerMediafile->mediafileId = $this->id;
-        $ownerMediafile->owner = $owner;
-        $ownerMediafile->ownerId = $ownerId;
-        $ownerMediafile->ownerAttribute = $ownerAttribute;
-
-        return $ownerMediafile->save();
+        return OwnerMediafile::addOwner($this->id, $ownerId, $owner, $ownerAttribute);
     }
 
     /**
@@ -185,13 +179,7 @@ class Mediafile extends ActiveRecord
      */
     public static function removeOwner(int $ownerId, string $owner, string $ownerAttribute): bool
     {
-        $deleted = OwnerMediafile::deleteAll([
-            'ownerId' => $ownerId,
-            'owner' => $owner,
-            'ownerAttribute' => $ownerAttribute,
-        ]);
-
-        return $deleted > 0;
+        return OwnerMediafile::removeOwner($ownerId, $owner, $ownerAttribute);
     }
 
     /**

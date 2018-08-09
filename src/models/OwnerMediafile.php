@@ -220,4 +220,14 @@ class OwnerMediafile extends Owner
     {
         return static::getMediaFiles($owner, $ownerId, UploadModelInterface::FILE_TYPE_OTHER);
     }
+
+    /**
+     * Get model mediafile primary key name.
+     *
+     * @return string
+     */
+    protected static function getModelKeyName(): string
+    {
+        return 'mediafileId';
+    }
 }

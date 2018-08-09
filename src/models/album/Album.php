@@ -184,13 +184,7 @@ class Album extends ActiveRecord
      */
     public function addOwner(int $ownerId, string $owner, string $ownerAttribute): bool
     {
-        $ownerAlbum = new OwnerAlbum();
-        $ownerAlbum->albumId = $this->id;
-        $ownerAlbum->owner = $owner;
-        $ownerAlbum->ownerId = $ownerId;
-        $ownerAlbum->ownerAttribute = $ownerAttribute;
-
-        return $ownerAlbum->save();
+        return OwnerAlbum::addOwner($this->id, $ownerId, $owner, $ownerAttribute);
     }
 
     /**
@@ -204,13 +198,7 @@ class Album extends ActiveRecord
      */
     public static function removeOwner(int $ownerId, string $owner, string $ownerAttribute): bool
     {
-        $deleted = OwnerAlbum::deleteAll([
-            'ownerId' => $ownerId,
-            'owner' => $owner,
-            'ownerAttribute' => $ownerAttribute,
-        ]);
-
-        return $deleted > 0;
+        return OwnerAlbum::removeOwner($ownerId, $owner, $ownerAttribute);
     }
 
     /**
