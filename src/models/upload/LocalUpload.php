@@ -131,7 +131,11 @@ class LocalUpload extends BaseUpload implements UploadModelInterface
     {
         BaseFileHelper::createDirectory($this->uploadPath, 0777);
 
-        return $this->file->saveAs($this->uploadPath . DIRECTORY_SEPARATOR . $this->outFileName);
+        $savePath = $this->uploadPath . DIRECTORY_SEPARATOR . $this->outFileName;
+
+        $this->file->saveAs($savePath);
+
+        return file_exists($savePath);
     }
 
     /**
