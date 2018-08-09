@@ -18,7 +18,7 @@ $(document).ready(function() {
 
         preview = getPreview({fileType: fileType, fileUrl: tmpPath, baseUrl: baseUrl});
 
-        if (window.fileNumber == null){
+        if (window.fileNumber == null) {
             window.fileNumber = 1;
         } else {
             window.fileNumber += 1;
@@ -50,7 +50,7 @@ $(document).ready(function() {
             progressBlock = fileBlock.find('[role="progress-block"]'),
             buttonBlockUpload = fileBlock.find('[role="button-block-upload"]'),
             buttonBlockDelete = fileBlock.find('[role="button-block-delete"]'),
-            url = window.uploadManagerContainer.attr('data-send-src'),
+            url = window.uploadManagerContainer.attr('data-send-url'),
             fileAttributeName = window.uploadManagerContainer.attr('data-file-attribute-name'),
             subDir = window.fileManagerModalContainer.attr("data-sub-dir"),
             owner = window.fileManagerModalContainer.attr("data-owner"),
@@ -68,27 +68,27 @@ $(document).ready(function() {
         paramsFiles[fileAttributeName] = file;
         params.files = paramsFiles;
 
-        if (fileType.split('/')[0] == 'image'){
+        if (fileType.split('/')[0] == 'image') {
             params.alt = fileBlock.find('[role="file-alt"]').val();
         }
 
-        if (subDir && subDir != ''){
+        if (subDir && subDir != '') {
             params.subDir = subDir;
         }
 
-        if (owner && owner != ''){
+        if (owner && owner != '') {
             params.owner = owner;
         }
 
-        if (ownerId && ownerId != ''){
+        if (ownerId && ownerId != '') {
             params.ownerId = ownerId;
         }
 
-        if (ownerAttribute && ownerAttribute != ''){
+        if (ownerAttribute && ownerAttribute != '') {
             params.ownerAttribute = ownerAttribute;
         }
 
-        if (neededFileType && neededFileType != ''){
+        if (neededFileType && neededFileType != '') {
             params.neededFileType = neededFileType;
         }
 
@@ -97,19 +97,19 @@ $(document).ready(function() {
 
         }, function(data) {
 
-            if (data.meta.status == 'success'){
+            if (data.meta.status == 'success') {
                 clearContainer(progressBlock);
                 clearContainer(buttonBlockUpload);
                 buttonBlockDelete.css('display', 'block');
 
-                if (data.data.files && data.data.files[0]){
+                if (data.data.files && data.data.files[0]) {
                     fileBlock.find('[role="delete-file-button"]').attr('data-file-id', data.data.files[0].id);
                 }
 
                 $(fileBlock.find('[role="file-title"]')).attr('disabled', 'disabled');
                 $(fileBlock.find('[role="file-description"]')).attr('disabled', 'disabled');
 
-                if (fileType.split('/')[0] == 'image'){
+                if (fileType.split('/')[0] == 'image') {
                     $(fileBlock.find('[role="file-alt"]')).attr('disabled', 'disabled');
                 }
 
@@ -131,7 +131,7 @@ $(document).ready(function() {
         var fileNumber = $(this).attr('data-file-number'),
             fileBlock = $(this).parents('[role="file-block"]'),
             progressBlock = fileBlock.find('[role="progress-block"]'),
-            url = window.uploadManagerContainer.attr('data-delete-src'),
+            url = window.uploadManagerContainer.attr('data-delete-url'),
             params = {
                 _csrf: window.yii.getCsrfToken(),
                 id: $(this).attr('data-file-id')
@@ -141,7 +141,7 @@ $(document).ready(function() {
 
         }, function(data) {
 
-            if (data.meta.status == 'success'){
+            if (data.meta.status == 'success') {
                 delete window.preparedFiles[fileNumber];
                 fileBlock.fadeOut();
             } else {
@@ -235,7 +235,7 @@ $(document).ready(function() {
      */
     function displayFileSize(size) {
         var kbSize = size/1024;
-        if (kbSize < 1024){
+        if (kbSize < 1024) {
             return kbSize.toFixed(2) + ' KB';
         } else {
             return (kbSize/1024).toFixed(2) + ' MB';

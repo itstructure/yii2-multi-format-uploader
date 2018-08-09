@@ -19,16 +19,20 @@ $(document).ready(function() {
         };
 
         AJAX(url, 'POST', params, false, function () {
-            if (isAjaxLoader){
+            if (isAjaxLoader) {
                 setAjaxLoader(popupElement);
             }
         }, function(data) {
             window.fileInfoContainer.html(data);
-            if (isAjaxLoader){
+            if (isAjaxLoader) {
                 clearContainer(popupElement);
             }
 
         }, function(data, xhr) {
+            window.fileInfoContainer.html(data);
+            if (isAjaxLoader) {
+                clearContainer(popupElement);
+            }
             showPopup(popupElement, 'Server Error!', true, 4000);
         });
     }
@@ -54,7 +58,7 @@ $(document).ready(function() {
         e.preventDefault();
 
         var fileInputs = $('[role="file-inputs"]'),
-            url = fileInputs.attr("data-update-src"),
+            url = fileInputs.attr("data-update-url"),
             baseUrl = fileInputs.attr("data-base-url"),
             popupElement = $('[role="popup"]'),
             subDir = window.fileManagerModalContainer.attr("data-sub-dir"),
@@ -66,15 +70,15 @@ $(document).ready(function() {
                 description: $('[role="file-description"]').val()
             };
 
-        if (fileInputs.attr("data-is-image") == true){
+        if (fileInputs.attr("data-is-image") == true) {
             params.alt = $('[role="file-alt"]').val();
         }
 
-        if (subDir && subDir != ''){
+        if (subDir && subDir != '') {
             params.subDir = subDir;
         }
 
-        if (neededFileType){
+        if (neededFileType) {
             params.neededFileType = neededFileType;
         }
 
@@ -91,31 +95,31 @@ $(document).ready(function() {
 
         }, function(data) {
 
-            if (data.meta.status == 'success'){
+            if (data.meta.status == 'success') {
                 showPopup(popupElement, data.meta.message, false);
                 getFileInfo(params.id, false);
 
-                if (data.data.files && data.data.files[0]){
+                if (data.data.files && data.data.files[0]) {
 
                     var file = data.data.files[0],
                         fileType = file.type,
                         fileTypeShort = fileType.split('/')[0],
                         previewOptions = {fileType: fileType, baseUrl: baseUrl};
 
-                    if (fileTypeShort == 'image'){
+                    if (fileTypeShort == 'image') {
                         previewOptions.fileUrl = file.thumbnailUrl;
                     } else {
                         previewOptions.fileUrl = file.url;
                     }
 
-                    if (fileTypeShort != 'image' && fileTypeShort != 'video' && fileTypeShort != 'audio'){
+                    if (fileTypeShort != 'image' && fileTypeShort != 'video' && fileTypeShort != 'audio') {
                         previewOptions.main = {width: 50};
                     }
 
                     var preview = getPreview(previewOptions) + '<span class="checked glyphicon glyphicon-ok"></span>',
                         itemSubclass = fileTypeShort == 'image' || fileTypeShort == 'video' ? 'floated' : 'cleared';
 
-                    if (fileTypeShort != 'image' && fileTypeShort != 'video'){
+                    if (fileTypeShort != 'image' && fileTypeShort != 'video') {
                         preview += ' ' + params.title;
                     }
 
@@ -138,7 +142,7 @@ $(document).ready(function() {
         e.preventDefault();
 
         var fileInputs = $('[role="file-inputs"]'),
-            url = fileInputs.attr("data-delete-src"),
+            url = fileInputs.attr("data-delete-url"),
             confirmMessage = fileInputs.attr("data-confirm-message"),
             popupElement = $('[role="popup"]'),
             params = {
@@ -152,7 +156,7 @@ $(document).ready(function() {
 
             }, function(data) {
 
-                if (data.meta.status == 'success'){
+                if (data.meta.status == 'success') {
                     $('[data-key="' + params.id + '"]').fadeOut();
                     clearContainer(window.fileInfoContainer);
                     showPopup(popupElement, data.meta.message, false);

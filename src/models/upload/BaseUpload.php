@@ -50,60 +50,70 @@ abstract class BaseUpload extends Model
 
     /**
      * Alt text for the file.
+     *
      * @var string
      */
     public $alt;
 
     /**
      * Title for the file.
+     *
      * @var string
      */
     public $title;
 
     /**
      * File description.
+     *
      * @var string
      */
     public $description;
 
     /**
      * Addition sub-directory for uploaded files.
+     *
      * @var string
      */
     public $subDir;
 
     /**
      * Owner name (post, page, article e.t.c.).
+     *
      * @var string
      */
     public $owner;
 
     /**
      * Owner id.
+     *
      * @var int
      */
     public $ownerId;
 
     /**
      * Owner attribute (image, audio, thumbnail e.t.c.).
+     *
      * @var string
      */
     public $ownerAttribute;
 
     /**
      * Needed file type for validation (thumbnail, image e.t.c.).
+     *
      * @var string
      */
     public $neededFileType;
 
     /**
      * Rename file after upload.
+     *
      * @var bool
      */
     public $renameFiles = true;
 
     /**
      * File extensions.
+     *
      * @var array
      */
     public $fileExtensions = [
@@ -130,18 +140,21 @@ abstract class BaseUpload extends Model
 
     /**
      * Check extension by MIME type (they are must match).
+     *
      * @var bool
      */
     public $checkExtensionByMimeType = true;
 
     /**
      * Maximum file size.
+     *
      * @var int
      */
     public $fileMaxSize = 1024*1024*64;
 
     /**
      * Thumbs config with their types and sizes.
+     *
      * @var array
      */
     public $thumbsConfig = [];
@@ -149,97 +162,114 @@ abstract class BaseUpload extends Model
     /**
      * Thumbnails name template.
      * Values can be the next: {original}, {width}, {height}, {alias}, {extension}
+     *
      * @var string
      */
     public $thumbFilenameTemplate = '{original}-{width}-{height}-{alias}.{extension}';
 
     /**
      * Directories for uploaded files depending on the file type.
+     *
      * @var array
      */
     public $uploadDirs;
 
     /**
      * Directory for uploaded files.
+     *
      * @var string
      */
     protected $uploadDir;
 
     /**
      * Full directory path to upload file.
+     *
      * @var string
      */
     protected $uploadPath;
 
     /**
      * Prepared file name to save in database and storage.
+     *
      * @var string
      */
     protected $outFileName;
 
     /**
      * File url path for database.
+     *
      * @var string
      */
     protected $databaseUrl;
 
     /**
      * File object.
+     *
      * @var UploadedFile
      */
     private $file;
 
     /**
      * Mediafile model to save files data.
+     *
      * @var Mediafile
      */
     private $mediafileModel;
 
     /**
      * Set params for send file.
+     *
      * @return void
      */
     abstract protected function setParamsForSend(): void;
 
     /**
      * Set some params for delete.
+     *
      * @return void
      */
     abstract protected function setParamsForDelete(): void;
 
     /**
      * Send file to local directory or send file to remote storage.
+     *
      * @return bool
      */
     abstract protected function sendFile(): bool;
 
     /**
      * Delete files from local directory or from remote storage.
+     *
      * @return void
      */
     abstract protected function deleteFiles(): void;
 
     /**
      * Create thumb.
+     *
      * @param ThumbConfigInterface $thumbConfig
+     *
      * @return string|null
      */
     abstract protected function createThumb(ThumbConfigInterface $thumbConfig);
 
     /**
      * Get storage type (local, s3, e.t.c...).
+     *
      * @return string
      */
     abstract protected function getStorageType(): string;
 
     /**
      * Actions after main save.
+     *
      * @return mixed
      */
     abstract protected function afterSave();
 
     /**
      * Scenarios.
+     *
      * @return array
      */
     public function scenarios(): array
@@ -252,6 +282,7 @@ abstract class BaseUpload extends Model
 
     /**
      * Attributes.
+     *
      * @return array
      */
     public function attributes()
@@ -300,7 +331,8 @@ abstract class BaseUpload extends Model
                     self::SCENARIO_UPDATE,
                 ],
                 'skipOnEmpty' => true,
-                'extensions' => array_key_exists($this->neededFileType, $this->fileExtensions) ? $this->fileExtensions[$this->neededFileType] : null,
+                'extensions' => array_key_exists($this->neededFileType, $this->fileExtensions) ?
+                    $this->fileExtensions[$this->neededFileType] : null,
                 'checkExtensionByMimeType' => $this->checkExtensionByMimeType,
                 'maxSize' => $this->fileMaxSize
             ],
@@ -320,7 +352,7 @@ abstract class BaseUpload extends Model
                     self::SCENARIO_UPLOAD,
                     self::SCENARIO_UPDATE,
                 ],
-                'filter' => function($value){
+                'filter' => function($value) {
                     return trim($value, DIRECTORY_SEPARATOR);
                 }
             ],
@@ -358,6 +390,7 @@ abstract class BaseUpload extends Model
 
     /**
      * Set mediafile model.
+     *
      * @param Mediafile $model
      */
     public function setMediafileModel(Mediafile $model): void
@@ -367,6 +400,7 @@ abstract class BaseUpload extends Model
 
     /**
      * Get mediafile model.
+     *
      * @return Mediafile
      */
     public function getMediafileModel(): Mediafile
@@ -376,7 +410,9 @@ abstract class BaseUpload extends Model
 
     /**
      * Set file.
+     *
      * @param UploadedFile|null $file
+     *
      * @return void
      */
     public function setFile(UploadedFile $file = null): void
@@ -386,6 +422,7 @@ abstract class BaseUpload extends Model
 
     /**
      * Set file.
+     *
      * @return mixed
      */
     public function getFile()
@@ -395,30 +432,32 @@ abstract class BaseUpload extends Model
 
     /**
      * Save file in the storage and database by using a "mediafileModel".
+     *
      * @throws \Exception
+     *
      * @return bool
      */
     public function save(): bool
     {
-        if ($this->mediafileModel->isNewRecord){
+        if ($this->mediafileModel->isNewRecord) {
             $this->setScenario(self::SCENARIO_UPLOAD);
         } else {
             $this->setScenario(self::SCENARIO_UPDATE);
         }
 
-        if (!$this->validate()){
+        if (!$this->validate()) {
             return false;
         }
 
-        if (null !== $this->file){
+        if (null !== $this->file) {
 
             $this->setParamsForSend();
 
-            if (!$this->sendFile()){
+            if (!$this->sendFile()) {
                 throw new \Exception('Error upload file.', 500);
             }
 
-            if ($this->getScenario() == self::SCENARIO_UPDATE){
+            if ($this->getScenario() == self::SCENARIO_UPDATE) {
                 $this->setParamsForDelete();
                 $this->deleteFiles();
             }
@@ -434,7 +473,7 @@ abstract class BaseUpload extends Model
         $this->mediafileModel->title = $this->title;
         $this->mediafileModel->description = $this->description;
 
-        if (!$this->mediafileModel->save()){
+        if (!$this->mediafileModel->save()) {
             throw new \Exception('Error save file data in database.', 500);
         }
 
@@ -445,7 +484,9 @@ abstract class BaseUpload extends Model
 
     /**
      * Delete files from local directory or from remote storage.
+     *
      * @throws \Exception
+     *
      * @return int
      */
     public function delete(): int
@@ -456,7 +497,7 @@ abstract class BaseUpload extends Model
 
         $deleted = $this->mediafileModel->delete();
 
-        if (false === $deleted){
+        if (false === $deleted) {
             throw new \Exception('Error delete file data from database.', 500);
         }
 
@@ -465,6 +506,7 @@ abstract class BaseUpload extends Model
 
     /**
      * Returns current model id.
+     *
      * @return int|string
      */
     public function getId()
@@ -474,7 +516,9 @@ abstract class BaseUpload extends Model
 
     /**
      * Create thumbs for this image
+     *
      * @throws InvalidConfigException
+     *
      * @return bool
      */
     public function createThumbs(): bool
@@ -485,22 +529,22 @@ abstract class BaseUpload extends Model
 
         foreach ($this->thumbsConfig as $alias => $preset) {
             $thumbUrl = $this->createThumb(Module::configureThumb($alias, $preset));
-            if (null === $thumbUrl){
+            if (null === $thumbUrl) {
                 continue;
             }
             $thumbs[$alias] = $thumbUrl;
         }
 
         // Create default thumb.
-        if (!array_key_exists(Module::DEFAULT_THUMB_ALIAS, $this->thumbsConfig)){
+        if (!array_key_exists(Module::THUMB_ALIAS_DEFAULT, $this->thumbsConfig)) {
             $thumbUrlDefault = $this->createThumb(
                 Module::configureThumb(
-                    Module::DEFAULT_THUMB_ALIAS,
+                    Module::THUMB_ALIAS_DEFAULT,
                     Module::getDefaultThumbConfig()
                 )
             );
-            if (null !== $thumbUrlDefault){
-                $thumbs[Module::DEFAULT_THUMB_ALIAS] = $thumbUrlDefault;
+            if (null !== $thumbUrlDefault) {
+                $thumbs[Module::THUMB_ALIAS_DEFAULT] = $thumbUrlDefault;
             }
         }
 
@@ -511,11 +555,13 @@ abstract class BaseUpload extends Model
 
     /**
      * Returns thumbnail name.
+     *
      * @param $original
      * @param $extension
      * @param $alias
      * @param $width
      * @param $height
+     *
      * @return string
      */
     public function getThumbFilename($original, $extension, $alias, $width, $height)
@@ -531,13 +577,16 @@ abstract class BaseUpload extends Model
 
     /**
      * Get upload directory configuration by file type.
+     *
      * @param string $fileType
+     *
      * @throws InvalidConfigException
+     *
      * @return string
      */
     protected function getUploadDirConfig(string $fileType): string
     {
-        if (!is_array($this->uploadDirs) || empty($this->uploadDirs)){
+        if (!is_array($this->uploadDirs) || empty($this->uploadDirs)) {
             throw new InvalidConfigException('The localUploadDirs is not defined.');
         }
 

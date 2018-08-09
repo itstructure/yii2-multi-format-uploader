@@ -24,12 +24,14 @@ class LocalUploadComponent extends BaseUploadComponent implements UploadComponen
 {
     /**
      * Root directory for local uploaded files.
+     *
      * @var string
      */
     public $uploadRoot;
 
     /**
      * Directory for uploaded files.
+     *
      * @var string
      */
     public $uploadDirs = [
@@ -46,24 +48,26 @@ class LocalUploadComponent extends BaseUploadComponent implements UploadComponen
      */
     public function init()
     {
-        if (null === $this->uploadRoot){
+        if (null === $this->uploadRoot) {
             $uploadRoot = Yii::getAlias('@webroot');
 
-            if (is_bool($uploadRoot)){
+            if (is_bool($uploadRoot)) {
                 throw new InvalidConfigException('The webroot must not be a bool type.');
             }
 
             $this->uploadRoot = $uploadRoot;
         }
 
-        if (null === $this->uploadRoot || !is_string($this->uploadRoot)){
+        if (null === $this->uploadRoot || !is_string($this->uploadRoot)) {
             throw new InvalidConfigException('The uploadRoot is not defined correctly.');
         }
     }
 
     /**
      * Sets a mediafile model for upload file.
+     *
      * @param Mediafile $mediafileModel
+     *
      * @return UploadModelInterface
      */
     public function setModelForSave(Mediafile $mediafileModel): UploadModelInterface
@@ -82,7 +86,9 @@ class LocalUploadComponent extends BaseUploadComponent implements UploadComponen
 
     /**
      * Sets a mediafile model for delete file.
+     *
      * @param Mediafile $mediafileModel
+     *
      * @return UploadModelInterface
      */
     public function setModelForDelete(Mediafile $mediafileModel): UploadModelInterface

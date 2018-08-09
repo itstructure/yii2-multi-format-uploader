@@ -7,8 +7,8 @@ use Itstructure\MFUploader\assets\UploadmanagerAsset;
 /* @var $manager string */
 /* @var $fileAttributeName string */
 /* @var $thumbStubUrls array */
-/* @var $sendSrc string */
-/* @var $deleteSrc string */
+/* @var $sendUrl string */
+/* @var $deleteUrl string */
 
 $this->params['bundle'] = UploadmanagerAsset::register($this);
 $this->params['manager'] = $manager;
@@ -19,8 +19,8 @@ $this->params['manager'] = $manager;
 </script>
 
 <div id="uploadmanager" role="uploadmanager"
-     data-send-src="<?php echo $sendSrc ?>"
-     data-delete-src="<?php echo $deleteSrc ?>"
+     data-send-url="<?php echo $sendUrl ?>"
+     data-delete-url="<?php echo $deleteUrl ?>"
      data-file-attribute-name="<?php echo $fileAttributeName ?>"
      data-base-url="<?php echo $this->params['bundle']->baseUrl ?>">
 

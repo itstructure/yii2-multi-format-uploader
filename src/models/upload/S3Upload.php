@@ -40,48 +40,56 @@ class S3Upload extends BaseUpload implements UploadModelInterface
 
     /**
      * Amazon web services S3 default bucket for upload files (not for delete).
+     *
      * @var string
      */
     public $s3DefaultBucket;
 
     /**
      * Buckets for upload depending on the owner.
+     *
      * @var array
      */
     public $s3Buckets = [];
 
     /**
      * Amazon web services SDK S3 client.
+     *
      * @var S3ClientInterface|S3MultiRegionClient
      */
     private $s3Client;
 
     /**
      * Binary contente of the original file.
+     *
      * @var string
      */
     private $originalContent;
 
     /**
      * Objects for delete (files in the S3 directory).
+     *
      * @var array
      */
     private $objectsForDelete = [];
 
     /**
      * Bucket, in which the located files will be deleted.
+     *
      * @var string
      */
     private $bucketForDelete;
 
     /**
      * Bucket for upload new files.
+     *
      * @var string
      */
     private $bucketForUpload;
 
     /**
      * S3 file options (bucket, prefix).
+     *
      * @var ActiveRecord|S3FileOptions
      */
     private $s3FileOptions;
@@ -91,13 +99,14 @@ class S3Upload extends BaseUpload implements UploadModelInterface
      */
     public function init()
     {
-        if (null === $this->s3Client){
+        if (null === $this->s3Client) {
             throw new InvalidConfigException('S3 client is not defined correctly.');
         }
     }
 
     /**
      * Set s3 client.
+     *
      * @param S3ClientInterface $s3Client
      */
     public function setS3Client(S3ClientInterface $s3Client): void
@@ -107,6 +116,7 @@ class S3Upload extends BaseUpload implements UploadModelInterface
 
     /**
      * Get s3 client.
+     *
      * @return S3ClientInterface|null
      */
     public function getS3Client()
@@ -116,6 +126,7 @@ class S3Upload extends BaseUpload implements UploadModelInterface
 
     /**
      * Get storage type - aws.
+     *
      * @return string
      */
     protected function getStorageType(): string
@@ -129,7 +140,9 @@ class S3Upload extends BaseUpload implements UploadModelInterface
      * $this->uploadDir
      * $this->outFileName
      * $this->bucketForUpload
+     *
      * @throws InvalidConfigException
+     *
      * @return void
      */
     protected function setParamsForSend(): void
@@ -137,7 +150,7 @@ class S3Upload extends BaseUpload implements UploadModelInterface
         $uploadDir = $this->getUploadDirConfig($this->file->type);
         $uploadDir = trim(str_replace('\\', self::BUCKET_DIR_SEPARATOR, $uploadDir), self::BUCKET_DIR_SEPARATOR);
 
-        if (!empty($this->subDir)){
+        if (!empty($this->subDir)) {
             $uploadDir = $uploadDir .
                 self::BUCKET_DIR_SEPARATOR .
                 trim(str_replace('\\', self::BUCKET_DIR_SEPARATOR, $this->subDir), self::BUCKET_DIR_SEPARATOR);
@@ -160,6 +173,7 @@ class S3Upload extends BaseUpload implements UploadModelInterface
      * It is needed to set the next parameters:
      * $this->objectsForDelete
      * $this->bucketForDelete
+     *
      * @return void
      */
     protected function setParamsForDelete(): void
@@ -182,12 +196,14 @@ class S3Upload extends BaseUpload implements UploadModelInterface
 
     /**
      * Send file to remote storage.
+     *
      * @throws InvalidConfigException
+     *
      * @return bool
      */
     protected function sendFile(): bool
     {
-        if (null === $this->bucketForUpload || !is_string($this->bucketForUpload)){
+        if (null === $this->bucketForUpload || !is_string($this->bucketForUpload)) {
             throw new InvalidConfigException('S3 bucket for upload is not defined correctly.');
         }
 
@@ -198,7 +214,7 @@ class S3Upload extends BaseUpload implements UploadModelInterface
             'Bucket' => $this->bucketForUpload
         ]);
 
-        if ($result['ObjectURL']){
+        if ($result['ObjectURL']) {
             $this->databaseUrl = $result['ObjectURL'];
             return true;
         }
@@ -208,6 +224,7 @@ class S3Upload extends BaseUpload implements UploadModelInterface
 
     /**
      * Delete storage directory with original file and thumbs.
+     *
      * @return void
      */
     protected function deleteFiles(): void
@@ -224,14 +241,16 @@ class S3Upload extends BaseUpload implements UploadModelInterface
 
     /**
      * Create thumb.
+     *
      * @param ThumbConfigInterface $thumbConfig
+     *
      * @return mixed
      */
     protected function createThumb(ThumbConfigInterface $thumbConfig)
     {
         $originalFile = pathinfo($this->mediafileModel->url);
 
-        if (null === $this->s3FileOptions){
+        if (null === $this->s3FileOptions) {
             $this->s3FileOptions = $this->getS3FileOptions();
         }
 
@@ -257,7 +276,7 @@ class S3Upload extends BaseUpload implements UploadModelInterface
             'Bucket' => $this->s3FileOptions->bucket
         ]);
 
-        if ($result['ObjectURL'] && !empty($result['ObjectURL'])){
+        if ($result['ObjectURL'] && !empty($result['ObjectURL'])) {
             return $result['ObjectURL'];
         }
 
@@ -266,11 +285,12 @@ class S3Upload extends BaseUpload implements UploadModelInterface
 
     /**
      * Actions after main save.
+     *
      * @return mixed
      */
     protected function afterSave()
     {
-        if (null !== $this->owner && null !== $this->ownerId && null != $this->ownerAttribute){
+        if (null !== $this->owner && null !== $this->ownerId && null != $this->ownerAttribute) {
             $this->mediafileModel->addOwner($this->ownerId, $this->owner, $this->ownerAttribute);
         }
 
@@ -281,16 +301,18 @@ class S3Upload extends BaseUpload implements UploadModelInterface
 
     /**
      * Get binary contente of the original file.
+     *
      * @throws InvalidValueException
+     *
      * @return string
      */
     private function getOriginalContent()
     {
-        if (null === $this->originalContent){
+        if (null === $this->originalContent) {
             $this->originalContent = file_get_contents($this->mediafileModel->url);
         }
 
-        if (!$this->originalContent){
+        if (!$this->originalContent) {
             throw new InvalidValueException('Content from '.$this->mediafileModel->url.' can not be read.');
         }
 
@@ -299,6 +321,7 @@ class S3Upload extends BaseUpload implements UploadModelInterface
 
     /**
      * S3 file options (bucket, prefix).
+     *
      * @return ActiveRecord|S3FileOptions
      */
     private function getS3FileOptions()
@@ -310,13 +333,15 @@ class S3Upload extends BaseUpload implements UploadModelInterface
 
     /**
      * Set S3 options for uploaded file in amazon S3 storage.
+     *
      * @param string $bucket
      * @param string $prefix
+     *
      * @return void
      */
     private function setS3FileOptions(string $bucket, string $prefix): void
     {
-        if (null !== $this->file){
+        if (null !== $this->file) {
             S3FileOptions::deleteAll([
                 'mediafileId' => $this->mediafileModel->id
             ]);

@@ -8,15 +8,15 @@ use Itstructure\MFUploader\Module;
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
 return [
-    Module::SMALL_THUMB_ALIAS => [
+    Module::THUMB_ALIAS_SMALL => [
         'name' => 'Small size',
         'size' => [120, 80],
     ],
-    Module::MEDIUM_THUMB_ALIAS => [
+    Module::THUMB_ALIAS_MEDIUM => [
         'name' => 'Medium size',
         'size' => [300, 240],
     ],
-    Module::LARGE_THUMB_ALIAS => [
+    Module::THUMB_ALIAS_LARGE => [
         'name' => 'Large size',
         'size' => [800, 600],
     ],

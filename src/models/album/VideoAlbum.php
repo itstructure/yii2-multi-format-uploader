@@ -4,7 +4,7 @@ namespace Itstructure\MFUploader\models\album;
 use yii\helpers\ArrayHelper;
 use Itstructure\MFUploader\behaviors\BehaviorMediafile;
 use Itstructure\MFUploader\interfaces\UploadModelInterface;
-use Itstructure\MFUploader\models\{ActiveRecord, OwnersMediafiles};
+use Itstructure\MFUploader\models\{ActiveRecord, OwnerMediafile};
 
 /**
  * This is the model class for video album.
@@ -27,6 +27,7 @@ class VideoAlbum extends Album
      * Can have the values according with the selected type of:
      * FileSetter::INSERTED_DATA_ID
      * FileSetter::INSERTED_DATA_URL
+     *
      * @var array video(array of 'mediafile id' or 'mediafile url').
      */
     public $video;
@@ -39,8 +40,8 @@ class VideoAlbum extends Album
         return ArrayHelper::merge(parent::rules(), [
             [
                 UploadModelInterface::FILE_TYPE_VIDEO,
-                function($attribute){
-                    if (!is_array($this->{$attribute})){
+                function($attribute) {
+                    if (!is_array($this->{$attribute})) {
                         $this->addError($attribute, 'Video field content must be an array.');
                     }
                 },
@@ -68,10 +69,11 @@ class VideoAlbum extends Album
 
     /**
      * Get album's video.
+     *
      * @return ActiveRecord[]
      */
     public function getVideoFiles()
     {
-        return OwnersMediafiles::getMediaFiles($this->type, $this->id, static::getFileType(self::ALBUM_TYPE_VIDEO));
+        return OwnerMediafile::getMediaFiles($this->type, $this->id, static::getFileType(self::ALBUM_TYPE_VIDEO));
     }
 }

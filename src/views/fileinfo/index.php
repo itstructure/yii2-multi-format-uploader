@@ -8,8 +8,8 @@ use Itstructure\MFUploader\assets\FilemanagerAsset;
 /** @var $this yii\web\View */
 /** @var $model Mediafile */
 /** @var $fileAttributeName string */
-/* @var $updateSrc string */
-/* @var $deleteSrc string */
+/* @var $updateUrl string */
+/* @var $deleteUrl string */
 /* @var $urlToSetFile string */
 /* @var $widthToSetFile int|null */
 
@@ -34,8 +34,8 @@ $bundle = FilemanagerAsset::register($this);
      data-file-url="<?php echo $urlToSetFile ?>"
      data-file-type="<?php echo $model->type ?>"
      data-file-attribute-name="<?php echo $fileAttributeName ?>"
-     data-update-src="<?php echo $updateSrc ?>"
-     data-delete-src="<?php echo $deleteSrc ?>"
+     data-update-url="<?php echo $updateUrl ?>"
+     data-delete-url="<?php echo $deleteUrl ?>"
      data-confirm-message="<?php echo Module::t('main', 'Are you sure you want to do this action?') ?>"
      data-is-image="<?php echo $model->isImage() ?>"
      data-base-url="<?php echo $bundle->baseUrl ?>"

@@ -17,7 +17,9 @@ class BehaviorAlbum extends Behavior
 {
     /**
      * Load Album model by conditions.
+     *
      * @param array $conditions
+     *
      * @return Album|ActiveRecordInterface|null
      */
     protected function loadModel(array $conditions)
@@ -27,9 +29,11 @@ class BehaviorAlbum extends Behavior
 
     /**
      * Remove owner of Album model.
+     *
      * @param int    $ownerId
      * @param string $owner
      * @param string $ownerAttribute
+     *
      * @return bool
      */
     protected function removeOwner(int $ownerId, string $owner, string $ownerAttribute): bool

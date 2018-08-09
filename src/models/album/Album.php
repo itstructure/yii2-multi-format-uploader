@@ -4,7 +4,7 @@ namespace Itstructure\MFUploader\models\album;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;
 use Itstructure\MFUploader\Module;
-use Itstructure\MFUploader\models\{ActiveRecord, OwnersAlbums, OwnersMediafiles, Mediafile};
+use Itstructure\MFUploader\models\{ActiveRecord, OwnerAlbum, OwnerMediafile, Mediafile};
 use Itstructure\MFUploader\interfaces\UploadModelInterface;
 
 /**
@@ -21,7 +21,6 @@ use Itstructure\MFUploader\interfaces\UploadModelInterface;
  * @property string $type
  * @property int $created_at
  * @property int $updated_at
- * @property OwnersAlbums[] $ownersAlbums
  *
  * @package Itstructure\MFUploader\models\album
  *
@@ -42,6 +41,7 @@ class Album extends ActiveRecord
      * Can have the values according with the selected type of:
      * FileSetter::INSERTED_DATA_ID
      * FileSetter::INSERTED_DATA_URL
+     *
      * @var int|string thumbnail(mediafile id or url).
      */
     public $thumbnail;
@@ -83,8 +83,8 @@ class Album extends ActiveRecord
             ],
             [
                 UploadModelInterface::FILE_TYPE_THUMB,
-                function($attribute){
-                    if (!is_numeric($this->{$attribute}) && !is_string($this->{$attribute})){
+                function($attribute) {
+                    if (!is_numeric($this->{$attribute}) && !is_string($this->{$attribute})) {
                         $this->addError($attribute, 'Tumbnail content must be a numeric or string.');
                     }
                 },
@@ -117,7 +117,9 @@ class Album extends ActiveRecord
 
     /**
      * Get album types or selected type.
+     *
      * @param string|null $key
+     *
      * @return mixed
      */
     public static function getAlbumTypes(string $key = null)
@@ -131,7 +133,7 @@ class Album extends ActiveRecord
             self::ALBUM_TYPE_OTHER => Module::t('album', 'Other files'),
         ];
 
-        if (null !== $key){
+        if (null !== $key) {
             return array_key_exists($key, $types) ? $types[$key] : [];
         }
 
@@ -140,7 +142,9 @@ class Album extends ActiveRecord
 
     /**
      * Get file type by album type.
+     *
      * @param string $albumType
+     *
      * @return mixed|null
      */
     public static function getFileType(string $albumType)
@@ -159,7 +163,9 @@ class Album extends ActiveRecord
 
     /**
      * Search models by file types.
+     *
      * @param array $types
+     *
      * @return ActiveRecord|array
      */
     public static function findByTypes(array $types): ActiveRecord
@@ -169,32 +175,36 @@ class Album extends ActiveRecord
 
     /**
      * Add owner to mediafiles table.
+     *
      * @param int    $ownerId
      * @param string $owner
      * @param string $ownerAttribute
+     *
      * @return bool
      */
     public function addOwner(int $ownerId, string $owner, string $ownerAttribute): bool
     {
-        $ownersAlbums = new OwnersAlbums();
-        $ownersAlbums->albumId = $this->id;
-        $ownersAlbums->owner = $owner;
-        $ownersAlbums->ownerId = $ownerId;
-        $ownersAlbums->ownerAttribute = $ownerAttribute;
+        $ownerAlbum = new OwnerAlbum();
+        $ownerAlbum->albumId = $this->id;
+        $ownerAlbum->owner = $owner;
+        $ownerAlbum->ownerId = $ownerId;
+        $ownerAlbum->ownerAttribute = $ownerAttribute;
 
-        return $ownersAlbums->save();
+        return $ownerAlbum->save();
     }
 
     /**
      * Remove this mediafile owner.
+     *
      * @param int    $ownerId
      * @param string $owner
      * @param string $ownerAttribute
+     *
      * @return bool
      */
     public static function removeOwner(int $ownerId, string $owner, string $ownerAttribute): bool
     {
-        $deleted = OwnersAlbums::deleteAll([
+        $deleted = OwnerAlbum::deleteAll([
             'ownerId' => $ownerId,
             'owner' => $owner,
             'ownerAttribute' => $ownerAttribute,
@@ -205,31 +215,36 @@ class Album extends ActiveRecord
 
     /**
      * Get album's owners.
+     *
      * @return ActiveQuery
      */
     public function getOwners()
     {
-        return $this->hasMany(OwnersAlbums::class, ['albumId' => 'id']);
+        return $this->hasMany(OwnerAlbum::class, ['albumId' => 'id']);
     }
 
     /**
      * Get album's mediafiles.
+     *
      * @param string|null $ownerAttribute
+     *
      * @return \Itstructure\MFUploader\models\ActiveRecord[]
      */
     public function getMediaFiles(string $ownerAttribute = null)
     {
-        return OwnersMediafiles::getMediaFiles($this->type, $this->id, $ownerAttribute);
+        return OwnerMediafile::getMediaFiles($this->type, $this->id, $ownerAttribute);
     }
 
     /**
      * Get album's mediafiles query.
+     *
      * @param string|null $ownerAttribute
+     *
      * @return ActiveQuery
      */
     public function getMediaFilesQuery(string $ownerAttribute = null)
     {
-        return OwnersMediafiles::getMediaFilesQuery([
+        return OwnerMediafile::getMediaFilesQuery([
             'owner' => $this->type,
             'ownerId' => $this->id,
             'ownerAttribute' => $ownerAttribute,
@@ -238,18 +253,21 @@ class Album extends ActiveRecord
 
     /**
      * Get album thumb image.
+     *
      * @param array  $options
+     *
      * @return mixed
      */
     public function getDefaultThumbImage(array $options = [])
     {
+        /** @var Mediafile $thumbnailModel */
         $thumbnailModel = $this->getThumbnailModel();
 
-        if (null === $thumbnailModel){
+        if (null === $thumbnailModel) {
             return null;
         }
 
-        $url = $thumbnailModel->getThumbUrl(Module::DEFAULT_THUMB_ALIAS);
+        $url = $thumbnailModel->getThumbUrl(Module::THUMB_ALIAS_DEFAULT);
 
         if (empty($url)) {
             return null;
@@ -264,6 +282,7 @@ class Album extends ActiveRecord
 
     /**
      * Get album's thumbnail.
+     *
      * @return array|null|\yii\db\ActiveRecord|Mediafile
      */
     public function getThumbnailModel()
@@ -272,6 +291,6 @@ class Album extends ActiveRecord
             return null;
         }
 
-        return OwnersMediafiles::getOwnerThumbnail($this->type, $this->id);
+        return OwnerMediafile::getOwnerThumbnail($this->type, $this->id);
     }
 }

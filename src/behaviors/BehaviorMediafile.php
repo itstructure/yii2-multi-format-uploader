@@ -17,7 +17,9 @@ class BehaviorMediafile extends Behavior
 {
     /**
      * Load Mediafile model by conditions.
+     *
      * @param array $conditions
+     *
      * @return Mediafile|ActiveRecordInterface|null
      */
     protected function loadModel(array $conditions)
@@ -27,9 +29,11 @@ class BehaviorMediafile extends Behavior
 
     /**
      * Remove owner of Mediafile model.
+     *
      * @param int    $ownerId
      * @param string $owner
      * @param string $ownerAttribute
+     *
      * @return bool
      */
     protected function removeOwner(int $ownerId, string $owner, string $ownerAttribute): bool

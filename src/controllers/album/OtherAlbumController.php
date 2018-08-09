@@ -15,6 +15,7 @@ class OtherAlbumController extends AlbumController
 {
     /**
      * Returns the name of the OtherAlbum model.
+     *
      * @return string
      */
     protected function getModelName():string
@@ -24,6 +25,7 @@ class OtherAlbumController extends AlbumController
 
     /**
      * Returns the type of other album.
+     *
      * @return string
      */
     protected function getAlbumType():string

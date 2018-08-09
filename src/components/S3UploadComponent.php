@@ -31,6 +31,7 @@ class S3UploadComponent extends BaseUploadComponent implements UploadComponentIn
 {
     /**
      * Directory for uploaded files.
+     *
      * @var string
      */
     public $uploadDirs = [
@@ -45,36 +46,42 @@ class S3UploadComponent extends BaseUploadComponent implements UploadComponentIn
     /**
      * AWS access key ID and secret access key.
      * @see https://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/credentials.html
+     *
      * @var array|callable
      */
     public $credentials;
 
     /**
      * Region to connect to.
+     *
      * @var string
      */
     public $region = 'us-west-2';
 
     /**
      * S3 client version.
+     *
      * @var string
      */
     public $clientVersion = 'latest';
 
     /**
      * Amazon web services S3 default bucket.
+     *
      * @var string
      */
     public $s3DefaultBucket;
 
     /**
      * Buckets to upload files depending on the owner.
+     *
      * @var array
      */
     public $s3Buckets = [];
 
     /**
      * Amazon web services SDK S3 client.
+     *
      * @var S3MultiRegionClient|S3ClientInterface
      */
     private $s3Client;
@@ -97,7 +104,9 @@ class S3UploadComponent extends BaseUploadComponent implements UploadComponentIn
 
     /**
      * Sets a mediafile model for upload file.
+     *
      * @param Mediafile $mediafileModel
+     *
      * @return UploadModelInterface
      */
     public function setModelForSave(Mediafile $mediafileModel): UploadModelInterface
@@ -118,7 +127,9 @@ class S3UploadComponent extends BaseUploadComponent implements UploadComponentIn
 
     /**
      * Sets a mediafile model for delete file.
+     *
      * @param Mediafile $mediafileModel
+     *
      * @return UploadModelInterface
      */
     public function setModelForDelete(Mediafile $mediafileModel): UploadModelInterface

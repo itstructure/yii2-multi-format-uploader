@@ -17,14 +17,16 @@ class LocalUploadController extends CommonUploadController
 {
     /**
      * Get local upload component.
+     *
      * @throws InvalidConfigException
+     *
      * @return UploadComponentInterface
      */
     protected function getUploadComponent(): UploadComponentInterface
     {
         $uploadComponent = $this->module->get('local-upload-component');
 
-        if (!($uploadComponent instanceof UploadComponentInterface)){
+        if (!($uploadComponent instanceof UploadComponentInterface)) {
             throw new InvalidConfigException("local-upload-component must be implemented of UploadComponentInterface.");
         }
 

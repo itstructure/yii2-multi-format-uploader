@@ -31,12 +31,14 @@ class LocalUpload extends BaseUpload implements UploadModelInterface
 
     /**
      * Root directory for uploaded files.
+     *
      * @var string
      */
     public $uploadRoot;
 
     /**
      * Directory for delete with all content.
+     *
      * @var string
      */
     private $directoryForDelete = [];
@@ -46,7 +48,7 @@ class LocalUpload extends BaseUpload implements UploadModelInterface
      */
     public function init()
     {
-        if (null === $this->uploadRoot || !is_string($this->uploadRoot)){
+        if (null === $this->uploadRoot || !is_string($this->uploadRoot)) {
             throw new InvalidConfigException('The uploadRoot is not defined correctly.');
         }
 
@@ -55,6 +57,7 @@ class LocalUpload extends BaseUpload implements UploadModelInterface
 
     /**
      * Get storage type - local.
+     *
      * @return string
      */
     protected function getStorageType(): string
@@ -69,14 +72,16 @@ class LocalUpload extends BaseUpload implements UploadModelInterface
      * $this->uploadPath
      * $this->outFileName
      * $this->databaseUrl
+     *
      * @throws InvalidConfigException
+     *
      * @return void
      */
     protected function setParamsForSend(): void
     {
         $uploadDir = trim(trim($this->getUploadDirConfig($this->file->type), '/'), '\\');
 
-        if (!empty($this->subDir)){
+        if (!empty($this->subDir)) {
             $uploadDir = $uploadDir .
                          DIRECTORY_SEPARATOR .
                          trim(trim($this->subDir, '/'), '\\');
@@ -99,6 +104,7 @@ class LocalUpload extends BaseUpload implements UploadModelInterface
      * Set some params for delete.
      * It is needed to set the next parameters:
      * $this->directoryForDelete
+     *
      * @return void
      */
     protected function setParamsForDelete(): void
@@ -109,7 +115,7 @@ class LocalUpload extends BaseUpload implements UploadModelInterface
 
         $dirnameParent = substr($dirname, 0, -(self::DIR_LENGTH_SECOND+1));
 
-        if (count(BaseFileHelper::findDirectories($dirnameParent)) == 1){
+        if (count(BaseFileHelper::findDirectories($dirnameParent)) == 1) {
             $this->directoryForDelete = $this->uploadRoot . DIRECTORY_SEPARATOR . $dirnameParent;
         } else {
             $this->directoryForDelete = $this->uploadRoot . DIRECTORY_SEPARATOR . $dirname;
@@ -118,6 +124,7 @@ class LocalUpload extends BaseUpload implements UploadModelInterface
 
     /**
      * Save file in local directory.
+     *
      * @return bool
      */
     protected function sendFile(): bool
@@ -129,6 +136,7 @@ class LocalUpload extends BaseUpload implements UploadModelInterface
 
     /**
      * Delete local directory with original file and thumbs.
+     *
      * @return void
      */
     protected function deleteFiles(): void
@@ -138,7 +146,9 @@ class LocalUpload extends BaseUpload implements UploadModelInterface
 
     /**
      * Create thumb.
+     *
      * @param ThumbConfigInterface|ThumbConfig $thumbConfig
+     *
      * @return string
      */
     protected function createThumb(ThumbConfigInterface $thumbConfig)
@@ -165,11 +175,12 @@ class LocalUpload extends BaseUpload implements UploadModelInterface
 
     /**
      * Actions after main save.
+     *
      * @return mixed
      */
     protected function afterSave()
     {
-        if (null !== $this->owner && null !== $this->ownerId && null != $this->ownerAttribute){
+        if (null !== $this->owner && null !== $this->ownerId && null != $this->ownerAttribute) {
             $this->mediafileModel->addOwner($this->ownerId, $this->owner, $this->ownerAttribute);
         }
     }

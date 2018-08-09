@@ -15,6 +15,7 @@ class VideoAlbumController extends AlbumController
 {
     /**
      * Returns the name of the VideoAlbum model.
+     *
      * @return string
      */
     protected function getModelName():string
@@ -24,6 +25,7 @@ class VideoAlbumController extends AlbumController
 
     /**
      * Returns the type of video album.
+     *
      * @return string
      */
     protected function getAlbumType():string

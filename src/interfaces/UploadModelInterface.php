@@ -28,50 +28,60 @@ interface UploadModelInterface
 
     /**
      * Set mediafile model.
+     *
      * @param Mediafile $model
      */
     public function setMediafileModel(Mediafile $model): void;
 
     /**
      * Get mediafile model.
+     *
      * @return Mediafile
      */
     public function getMediafileModel(): Mediafile;
 
     /**
      * Set file.
-     * @param UploadedFile $file|null
+     *
+     * @param UploadedFile|null $file
+     *
      * @return void
      */
     public function setFile(UploadedFile $file = null): void;
 
     /**
      * Get file.
+     *
      * @return mixed
      */
     public function getFile();
 
     /**
      * Save file in storage and database.
+     *
      * @return bool
      */
     public function save(): bool ;
 
     /**
      * Delete file from storage and database.
+     *
      * @return int
      */
     public function delete(): int;
 
     /**
      * Returns current model id.
+     *
      * @return int|string
      */
     public function getId();
 
     /**
      * Create thumbs for this image
+     *
      * @throws InvalidConfigException
+     *
      * @return bool
      */
     public function createThumbs(): bool;
@@ -79,8 +89,10 @@ interface UploadModelInterface
     /**
      * Load data.
      * Used from the parent model yii\base\Model.
+     *
      * @param $data
      * @param null $formName
+     *
      * @return bool
      */
     public function load($data, $formName = null);
@@ -88,8 +100,10 @@ interface UploadModelInterface
     /**
      * Set attributes with their values.
      * Used from the parent model yii\base\Model.
+     *
      * @param      $values
      * @param bool $safeOnly
+     *
      * @return mixed
      */
     public function setAttributes($values, $safeOnly = true);
@@ -97,8 +111,10 @@ interface UploadModelInterface
     /**
      * Validate data.
      * Used from the parent model yii\base\Model.
+     *
      * @param null $attributeNames
      * @param bool $clearErrors
+     *
      * @return mixed
      */
     public function validate($attributeNames = null, $clearErrors = true);
@@ -106,7 +122,9 @@ interface UploadModelInterface
     /**
      * Returns the errors for all attributes or a single attribute.
      * Used from the parent model yii\base\Model.
+     *
      * @param string $attribute attribute name. Use null to retrieve errors for all attributes.
+     *
      * @return array errors for all attributes or the specified attribute. Empty array is returned if no error.
      */
     public function getErrors($attribute = null);

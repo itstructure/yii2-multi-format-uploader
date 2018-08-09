@@ -17,7 +17,7 @@ use Itstructure\MFUploader\interfaces\UploadModelInterface;
  *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
-class OwnersMediafiles extends Owners
+class OwnerMediafile extends Owner
 {
     /**
      * {@inheritdoc}
@@ -86,9 +86,11 @@ class OwnersMediafiles extends Owners
 
     /**
      * Get all mediafiles by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
      * @param null|string $ownerAttribute
+     *
      * @return Mediafile[]
      */
     public static function getMediaFiles(string $owner, int $ownerId, string $ownerAttribute = null)
@@ -102,7 +104,9 @@ class OwnersMediafiles extends Owners
 
     /**
      * Get all mediafiles Query by owner.
+     *
      * @param array $args. It can be an array of the next params: owner{string}, ownerId{int}, ownerAttribute{string}.
+     *
      * @return ActiveQuery
      */
     public static function getMediaFilesQuery(array $args = []): ActiveQuery
@@ -115,8 +119,10 @@ class OwnersMediafiles extends Owners
 
     /**
      * Get one owner thumbnail file by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
+     *
      * @return array|null|\yii\db\ActiveRecord|Mediafile
      */
     public static function getOwnerThumbnail(string $owner, int $ownerId)
@@ -127,7 +133,7 @@ class OwnersMediafiles extends Owners
             'ownerAttribute' => UploadModelInterface::FILE_TYPE_THUMB,
         ])->one();
 
-        if (null === $mediafileId){
+        if (null === $mediafileId) {
             return null;
         }
 
@@ -139,8 +145,10 @@ class OwnersMediafiles extends Owners
 
     /**
      * Get image files by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
+     *
      * @return Mediafile[]
      */
     public static function getImageFiles(string $owner, int $ownerId)
@@ -150,8 +158,10 @@ class OwnersMediafiles extends Owners
 
     /**
      * Get audio files by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
+     *
      * @return Mediafile[]
      */
     public static function getAudioFiles(string $owner, int $ownerId)
@@ -161,8 +171,10 @@ class OwnersMediafiles extends Owners
 
     /**
      * Get video files by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
+     *
      * @return Mediafile[]
      */
     public static function getVideoFiles(string $owner, int $ownerId)
@@ -172,8 +184,10 @@ class OwnersMediafiles extends Owners
 
     /**
      * Get app files by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
+     *
      * @return Mediafile[]
      */
     public static function getAppFiles(string $owner, int $ownerId)
@@ -183,8 +197,10 @@ class OwnersMediafiles extends Owners
 
     /**
      * Get text files by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
+     *
      * @return Mediafile[]
      */
     public static function getTextFiles(string $owner, int $ownerId)
@@ -194,8 +210,10 @@ class OwnersMediafiles extends Owners
 
     /**
      * Get other files by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
+     *
      * @return Mediafile[]
      */
     public static function getOtherFiles(string $owner, int $ownerId)

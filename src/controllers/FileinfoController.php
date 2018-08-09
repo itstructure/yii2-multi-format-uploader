@@ -2,10 +2,11 @@
 
 namespace Itstructure\MFUploader\controllers;
 
-use yii\web\Controller;
+use yii\web\{Controller, BadRequestHttpException};
 use yii\filters\{VerbFilter, AccessControl};
 use Itstructure\MFUploader\Module;
 use Itstructure\MFUploader\models\Mediafile;
+use Itstructure\MFUploader\traits\ResponseTrait;
 
 /**
  * Class FileinfoController
@@ -19,6 +20,8 @@ use Itstructure\MFUploader\models\Mediafile;
  */
 class FileinfoController extends Controller
 {
+    use ResponseTrait;
+
     /**
      * Initialize.
      */
@@ -55,18 +58,26 @@ class FileinfoController extends Controller
 
     /**
      * Get file info.
+     *
+     * @throws BadRequestHttpException
+     *
      * @return string
      */
     public function actionIndex()
     {
         $id = \Yii::$app->request->post('id');
 
+        if (empty($id) || !is_numeric($id)) {
+            throw new BadRequestHttpException(Module::t('actions', 'Parameter id must be sent.'));
+        }
+
+        /** @var Mediafile $model */
         $model = Mediafile::findOne($id);
 
         // Set url to set file by Java script.
-        if ($model->isImage()){
-            $urlToSetFile = $model->getThumbUrl(Module::MEDIUM_THUMB_ALIAS);
-            if (null === $urlToSetFile || empty($urlToSetFile)){
+        if ($model->isImage()) {
+            $urlToSetFile = $model->getThumbUrl(Module::THUMB_ALIAS_MEDIUM);
+            if (empty($urlToSetFile)) {
                 $urlToSetFile = $model->url;
             }
 
@@ -75,11 +86,11 @@ class FileinfoController extends Controller
         }
 
         // Set width to set file by Java script.
-        if ($model->isImage()){
-            $widthToSetFile = isset($this->module->thumbsConfig[Module::MEDIUM_THUMB_ALIAS]) ?
-                $this->module->thumbsConfig[Module::MEDIUM_THUMB_ALIAS]['size'][0] : Module::ORIGINAL_PREVIEW_WIDTH;
+        if ($model->isImage()) {
+            $widthToSetFile = isset($this->module->thumbsConfig[Module::THUMB_ALIAS_MEDIUM]) ?
+                $this->module->thumbsConfig[Module::THUMB_ALIAS_MEDIUM]['size'][0] : Module::ORIGINAL_PREVIEW_WIDTH;
 
-        } elseif ($model->isAudio() || $model->isVideo()){
+        } elseif ($model->isAudio() || $model->isVideo()) {
             $widthToSetFile = Module::ORIGINAL_PREVIEW_WIDTH;
 
         } else {
@@ -91,8 +102,8 @@ class FileinfoController extends Controller
             'urlToSetFile' => $urlToSetFile,
             'widthToSetFile' => $widthToSetFile,
             'fileAttributeName' => $this->module->fileAttributeName,
-            'updateSrc' => Module::getUpdateSrc($this->module->defaultStorageType),
-            'deleteSrc' => Module::getDeleteSrc($this->module->defaultStorageType),
+            'updateUrl' => Module::getUpdateUrl($this->module->defaultStorageType),
+            'deleteUrl' => Module::getDeleteUrl($this->module->defaultStorageType),
         ]);
     }
 }

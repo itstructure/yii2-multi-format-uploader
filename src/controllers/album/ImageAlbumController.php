@@ -15,6 +15,7 @@ class ImageAlbumController extends AlbumController
 {
     /**
      * Returns the name of the ImageAlbum model.
+     *
      * @return string
      */
     protected function getModelName():string
@@ -24,6 +25,7 @@ class ImageAlbumController extends AlbumController
 
     /**
      * Returns the type of image album.
+     *
      * @return string
      */
     protected function getAlbumType():string

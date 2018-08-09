@@ -1,6 +1,6 @@
 <?php
 
-/** @var string $srcToFiles Src to get files by filemanager. */
+/** @var string $fileManagerUrl Url to get files by filemanager. */
 /** @var int $btnId */
 /** @var int $inputId */
 /** @var string $mediafileContainer In this container will be inserted selected mediafile. */
@@ -15,7 +15,7 @@
 ?>
 
 <div role="filemanager-modal" class="modal" tabindex="-1"
-     data-src-to-files="<?php echo $srcToFiles ?>"
+     data-src-to-files="<?php echo $fileManagerUrl ?>"
      data-btn-id="<?php echo $btnId ?>"
      data-input-id="<?php echo $inputId ?>"
      data-mediafile-container="<?php echo isset($mediafileContainer) ? $mediafileContainer : '' ?>"

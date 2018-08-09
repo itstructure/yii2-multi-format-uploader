@@ -2,6 +2,11 @@
 
 namespace Itstructure\MFUploader\assets;
 
+/**
+ * Class FileSetterAsset
+ *
+ * @package Itstructure\MFUploader\assets
+ */
 class FileSetterAsset extends BaseAsset
 {
     public $css = [

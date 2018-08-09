@@ -4,7 +4,7 @@ namespace Itstructure\MFUploader\models\album;
 use yii\helpers\ArrayHelper;
 use Itstructure\MFUploader\behaviors\BehaviorMediafile;
 use Itstructure\MFUploader\interfaces\UploadModelInterface;
-use Itstructure\MFUploader\models\{ActiveRecord, OwnersMediafiles};
+use Itstructure\MFUploader\models\{ActiveRecord, OwnerMediafile};
 
 /**
  * This is the model class for audio album.
@@ -27,6 +27,7 @@ class AudioAlbum extends Album
      * Can have the values according with the selected type of:
      * FileSetter::INSERTED_DATA_ID
      * FileSetter::INSERTED_DATA_URL
+     *
      * @var array audio(array of 'mediafile id' or 'mediafile url').
      */
     public $audio;
@@ -39,8 +40,8 @@ class AudioAlbum extends Album
         return ArrayHelper::merge(parent::rules(), [
             [
                 UploadModelInterface::FILE_TYPE_AUDIO,
-                function($attribute){
-                    if (!is_array($this->{$attribute})){
+                function($attribute) {
+                    if (!is_array($this->{$attribute})) {
                         $this->addError($attribute, 'Audio field content must be an array.');
                     }
                 },
@@ -68,10 +69,11 @@ class AudioAlbum extends Album
 
     /**
      * Get album's audio.
+     *
      * @return ActiveRecord[]
      */
     public function getAudioFiles()
     {
-        return OwnersMediafiles::getMediaFiles($this->type, $this->id, static::getFileType(self::ALBUM_TYPE_AUDIO));
+        return OwnerMediafile::getMediaFiles($this->type, $this->id, static::getFileType(self::ALBUM_TYPE_AUDIO));
     }
 }

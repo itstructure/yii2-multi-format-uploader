@@ -17,7 +17,7 @@ use Itstructure\MFUploader\models\album\Album;
  *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
-class OwnersAlbums extends Owners
+class OwnerAlbum extends Owner
 {
     /**
      * {@inheritdoc}
@@ -86,9 +86,11 @@ class OwnersAlbums extends Owners
 
     /**
      * Get all albums by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
      * @param string $ownerAttribute
+     *
      * @return Album[]
      */
     public static function getAlbums(string $owner, int $ownerId, string $ownerAttribute = null)
@@ -102,7 +104,9 @@ class OwnersAlbums extends Owners
 
     /**
      * Get all albums Query by owner.
+     *
      * @param array $args. It can be an array of the next params: owner{string}, ownerId{int}, ownerAttribute{string}.
+     *
      * @return ActiveQuery
      */
     public static function getAlbumsQuery(array $args = []): ActiveQuery
@@ -115,8 +119,10 @@ class OwnersAlbums extends Owners
 
     /**
      * Get image albums by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
+     *
      * @return Album[]
      */
     public static function getImageAlbums(string $owner, int $ownerId)
@@ -126,8 +132,10 @@ class OwnersAlbums extends Owners
 
     /**
      * Get audio albums by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
+     *
      * @return Album[]
      */
     public static function getAudioAlbums(string $owner, int $ownerId)
@@ -137,8 +145,10 @@ class OwnersAlbums extends Owners
 
     /**
      * Get video albums by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
+     *
      * @return Album[]
      */
     public static function getVideoAlbums(string $owner, int $ownerId)
@@ -148,8 +158,10 @@ class OwnersAlbums extends Owners
 
     /**
      * Get application albums by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
+     *
      * @return Album[]
      */
     public static function getAppAlbums(string $owner, int $ownerId)
@@ -159,8 +171,10 @@ class OwnersAlbums extends Owners
 
     /**
      * Get text albums by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
+     *
      * @return Album[]
      */
     public static function getTextAlbums(string $owner, int $ownerId)
@@ -170,8 +184,10 @@ class OwnersAlbums extends Owners
 
     /**
      * Get other albums by owner.
+     *
      * @param string $owner
      * @param int    $ownerId
+     *
      * @return Album[]
      */
     public static function getOtherAlbums(string $owner, int $ownerId)

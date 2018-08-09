@@ -15,6 +15,7 @@ class AudioAlbumController extends AlbumController
 {
     /**
      * Returns the name of the AudioAlbum model.
+     *
      * @return string
      */
     protected function getModelName():string
@@ -24,6 +25,7 @@ class AudioAlbumController extends AlbumController
 
     /**
      * Returns the type of audio album.
+     *
      * @return string
      */
     protected function getAlbumType():string

@@ -32,7 +32,7 @@ $(document).ready(function() {
                         baseUrl: baseUrl
                     };
 
-                if (fileTypeShort === 'image' || fileTypeShort === 'video' || fileTypeShort === 'audio'){
+                if (fileTypeShort === 'image' || fileTypeShort === 'video' || fileTypeShort === 'audio') {
                     previewOptions.main = {width: fileInputs.attr("data-original-preview-width")};
                 }
 
@@ -40,13 +40,13 @@ $(document).ready(function() {
                 mediafileContainer.html(preview);
 
                 /* Set title */
-                if (titleContainer){
+                if (titleContainer) {
                     var titleValue = $(fileInputs.contents().find('[role="file-title"]')).val();
                     titleContainer.html(titleValue);
                 }
 
                 /* Set description */
-                if (descriptionContainer){
+                if (descriptionContainer) {
                     var descriptionValue = $(fileInputs.contents().find('[role="file-description"]')).val();
                     descriptionContainer.html(descriptionValue);
                 }
@@ -72,24 +72,24 @@ $(document).ready(function() {
         var paramsArray = [];
         var paramsQuery = '';
 
-        if (owner){
+        if (owner) {
             paramsArray.owner = owner;
         }
 
-        if (ownerId){
+        if (ownerId) {
             paramsArray.ownerId = ownerId;
         }
 
-        if (ownerAttribute){
+        if (ownerAttribute) {
             paramsArray.ownerAttribute = ownerAttribute;
         }
 
-        for (var index in paramsArray){
+        for (var index in paramsArray) {
             var paramString = index + '=' + paramsArray[index];
             paramsQuery += paramsQuery == '' ? paramString : '&' + paramString;
         }
 
-        if (paramsQuery != ''){
+        if (paramsQuery != '') {
             srcToFiles += '?' + paramsQuery;
         }
 

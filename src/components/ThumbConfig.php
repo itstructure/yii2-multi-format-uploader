@@ -21,36 +21,42 @@ class ThumbConfig implements ThumbConfigInterface
 {
     /**
      * Alias name.
+     *
      * @var string
      */
     public $alias;
 
     /**
      * Config name.
+     *
      * @var string
      */
     public $name;
 
     /**
      * Thumb width.
+     *
      * @var
      */
     public $width;
 
     /**
      * Thumb height.
+     *
      * @var
      */
     public $height;
 
     /**
      * Thumb mode.
+     *
      * @var
      */
     public $mode;
 
     /**
      * Get alias name.
+     *
      * @return string
      */
     public function getAlias(): string
@@ -60,6 +66,7 @@ class ThumbConfig implements ThumbConfigInterface
 
     /**
      * Get config name.
+     *
      * @return string
      */
     public function getName(): string
@@ -69,6 +76,7 @@ class ThumbConfig implements ThumbConfigInterface
 
     /**
      * Get thumb width.
+     *
      * @return int
      */
     public function getWidth(): int
@@ -78,6 +86,7 @@ class ThumbConfig implements ThumbConfigInterface
 
     /**
      * Get thumb height.
+     *
      * @return int
      */
     public function getHeight(): int
@@ -87,6 +96,7 @@ class ThumbConfig implements ThumbConfigInterface
 
     /**
      * Get thumb mode.
+     *
      * @return string
      */
     public function getMode(): string

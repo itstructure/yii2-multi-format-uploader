@@ -16,8 +16,10 @@ class Html extends BaseHtml
 {
     /**
      * Render html 5 audio tag structure.
+     *
      * @param string $src
      * @param array $options
+     *
      * @return string
      */
     public static function audio(string $src, array $options = []): string
@@ -31,8 +33,10 @@ class Html extends BaseHtml
 
     /**
      * Render html 5 video tag structure.
+     *
      * @param string $src
      * @param array $options
+     *
      * @return string
      */
     public static function video(string $src, array $options = []): string
@@ -47,7 +51,10 @@ class Html extends BaseHtml
     }
 
     /**
+     * Get main options of the mediafile.
+     *
      * @param array $options
+     *
      * @return array
      */
     private static function getMainOptions(array $options = []): array
@@ -56,15 +63,18 @@ class Html extends BaseHtml
             'controls' => 'controls',
             'width' => Module::ORIGINAL_PREVIEW_WIDTH,
         ];
-        if (isset($options['main']) && is_array($options['main'])){
+        if (isset($options['main']) && is_array($options['main'])) {
             $mainOptions = ArrayHelper::merge($mainOptions, $options['main']);
         }
         return $mainOptions;
     }
 
     /**
+     * Get source options of the mediafile.
+     *
      * @param string $src
      * @param array $options
+     *
      * @return array
      */
     private static function getSourceOptions(string $src, array $options = []): array
@@ -73,14 +83,17 @@ class Html extends BaseHtml
             'src' => $src,
             'preload' => 'auto'
         ];
-        if (isset($options['source']) && is_array($options['source'])){
+        if (isset($options['source']) && is_array($options['source'])) {
             $sourceOptions = ArrayHelper::merge($sourceOptions, $options['source']);
         }
         return $sourceOptions;
     }
 
     /**
+     * Get track options of the mediafile.
+     *
      * @param array $options
+     *
      * @return array
      */
     private static function getTrackOptions(array $options = []): array
@@ -88,21 +101,28 @@ class Html extends BaseHtml
         $trackOptions = [
             'kind' => 'subtitles'
         ];
-        if (isset($options['track']) && is_array($options['track'])){
+        if (isset($options['track']) && is_array($options['track'])) {
             $trackOptions = ArrayHelper::merge($trackOptions, $options['track']);
         }
         return $trackOptions;
     }
 
     /**
+     * Get tag of the mediafile.
+     *
      * @param string $tagName
      * @param array $mainOptions
      * @param array $sourceOptions
      * @param array $trackOptions
+     *
      * @return string
      */
-    private static function getTag(string $tagName, array $mainOptions, array $sourceOptions, array $trackOptions): string
-    {
+    private static function getTag(
+        string $tagName,
+        array $mainOptions,
+        array $sourceOptions,
+        array $trackOptions): string {
+
         return static::tag(
             $tagName,
             static::tag('source', '', $sourceOptions) . static::tag('track', '', $trackOptions),

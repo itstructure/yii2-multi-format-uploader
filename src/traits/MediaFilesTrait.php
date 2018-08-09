@@ -5,7 +5,7 @@ use Yii;
 use yii\web\NotFoundHttpException;
 use yii\base\{InvalidConfigException, UnknownMethodException};
 use Itstructure\MFUploader\Module;
-use Itstructure\MFUploader\models\{Mediafile, OwnersMediafiles};
+use Itstructure\MFUploader\models\{Mediafile, OwnerMediafile};
 use Itstructure\MFUploader\models\upload\BaseUpload;
 use Itstructure\MFUploader\components\{LocalUploadComponent, S3UploadComponent};
 use Itstructure\MFUploader\interfaces\{UploadComponentInterface, UploadModelInterface};
@@ -13,7 +13,8 @@ use Itstructure\MFUploader\interfaces\{UploadComponentInterface, UploadModelInte
 /**
  * Trait DeleteFilesTrait
  *
- * @property UploadComponentInterface[]|LocalUploadComponent[]|S3UploadComponent[] $tmpUploadComponents Upload components to delete files according with their different types.
+ * @property UploadComponentInterface[]|LocalUploadComponent[]|S3UploadComponent[] $tmpUploadComponents
+ * Upload components to delete files according with their different types.
  *
  * @package Itstructure\MFUploader\traits
  *
@@ -30,14 +31,16 @@ trait MediaFilesTrait
 
     /**
      * Delete mediafiles from owner.
+     *
      * @param string $owner
      * @param int $ownerId
      * @param Module $module
+     *
      * @return void
      */
     protected function deleteMediafiles(string $owner, int $ownerId, Module $module): void
     {
-        $mediafileIds = OwnersMediafiles::getMediaFilesQuery([
+        $mediafileIds = OwnerMediafile::getMediaFilesQuery([
             'owner' => $owner,
             'ownerId' => $ownerId,
         ])
@@ -51,18 +54,22 @@ trait MediaFilesTrait
 
     /**
      * Find the media model entry.
+     *
      * @param int $id
+     *
      * @throws UnknownMethodException
      * @throws NotFoundHttpException
+     *
      * @return Mediafile
      */
     protected function findMediafileModel(int $id): Mediafile
     {
         $modelObject = new Mediafile();
 
-        if (!method_exists($modelObject, 'findOne')){
+        if (!method_exists($modelObject, 'findOne')) {
             $class = (new\ReflectionClass($modelObject));
-            throw new UnknownMethodException('Method findOne does not exists in ' . $class->getNamespaceName() . '\\' . $class->getShortName().' class.');
+            throw new UnknownMethodException('Method findOne does not exists in ' . $class->getNamespaceName() . '\\' .
+                $class->getShortName().' class.');
         }
 
         $result = call_user_func([
@@ -79,17 +86,20 @@ trait MediaFilesTrait
 
     /**
      * Delete mediafile record with files.
+     *
      * @param array|int|string $id
      * @param Module $module
+     *
      * @throws InvalidConfigException
+     *
      * @return bool|int
      */
     protected function deleteMediafileEntry($id, Module $module)
     {
-        if (is_array($id)){
+        if (is_array($id)) {
             $i = 0;
             foreach ($id as $item) {
-                if (!$this->deleteMediafileEntry((int)$item, $module)){
+                if (!$this->deleteMediafileEntry((int)$item, $module)) {
                     return false;
                 }
                 $i += 1;
@@ -115,7 +125,7 @@ trait MediaFilesTrait
             /** @var UploadModelInterface|BaseUpload $deleteModel */
             $deleteModel = $this->tmpUploadComponents[$mediafileModel->storage]->setModelForDelete($mediafileModel);
 
-            if ($deleteModel->delete() === 0){
+            if ($deleteModel->delete() === 0) {
                 return false;
             }
 
@@ -125,14 +135,16 @@ trait MediaFilesTrait
 
     /**
      * Set tmp upload component if not isset.
+     *
      * @param string $storage
      * @param string $componentName
      * @param Module $module
+     *
      * @return void
      */
     private function setComponentIfNotIsset(string $storage, string $componentName, Module $module): void
     {
-        if (!isset($this->tmpUploadComponents[$storage])){
+        if (!isset($this->tmpUploadComponents[$storage])) {
             $this->tmpUploadComponents[$storage] = $module->get($componentName);
         }
     }

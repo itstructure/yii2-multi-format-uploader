@@ -30,17 +30,17 @@ return [
     UploadModelInterface::FILE_TYPE_IMAGE => [
         'existing' => [
             'mainTag' => [
-                'alias' => Module::MEDIUM_THUMB_ALIAS
+                'alias' => Module::THUMB_ALIAS_MEDIUM
             ]
         ],
         'fileinfo' => [
             'mainTag' => [
-                'alias' => Module::DEFAULT_THUMB_ALIAS
+                'alias' => Module::THUMB_ALIAS_DEFAULT
             ]
         ],
         'fileitem' => [
             'mainTag' => [
-                'alias' => Module::DEFAULT_THUMB_ALIAS
+                'alias' => Module::THUMB_ALIAS_DEFAULT
             ]
         ],
     ],

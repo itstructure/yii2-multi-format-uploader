@@ -16,13 +16,13 @@ $this->params['manager'] = $manager;
 ?>
 
 <div id="filemanager" role="filemanager"
-     data-url-info="<?php echo Module::FILE_INFO_SRC ?>">
+     data-url-info="<?php echo Module::URL_FILE_INFO ?>">
 
     <div class="items">
         <?php echo ListView::widget([
             'dataProvider' => $dataProvider,
             'itemView' => '_fileItem',
-            'itemOptions' => function($model){
+            'itemOptions' => function($model) {
                 /* @var $model Mediafile */
                 return [
                     'class' => 'item '.($model->isImage() || $model->isVideo() ? 'floated' : 'cleared'),

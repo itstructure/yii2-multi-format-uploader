@@ -7,7 +7,7 @@
  * @returns {string}        - Object as Get params string
  */
 function serializeParams(obj) {
-    return Object.keys(obj).reduce(function(a,k){a.push(k+'='+encodeURIComponent(obj[k]));return a},[]).join('&');
+    return Object.keys(obj).reduce(function(a,k) {a.push(k+'='+encodeURIComponent(obj[k]));return a},[]).join('&');
 }
 
 /**
@@ -49,7 +49,7 @@ function AJAX(url, method, params, response_json, func_waiting, func_callback, f
 
             var response_text = xhr.responseText;
 
-            if (response_json){
+            if (response_json) {
                 try {
                     response_text = JSON.parse(response_text);
                 } catch (e) { }
@@ -126,7 +126,7 @@ function showPopup(container, data, error, time)
 {
     var classPopup;
 
-    if (error){
+    if (error) {
         classPopup = 'popup error';
     } else {
         classPopup = 'popup success';
@@ -134,13 +134,13 @@ function showPopup(container, data, error, time)
 
     var content = '';
 
-    if (jQuery.type(data) === 'string'){
+    if (jQuery.type(data) === 'string') {
         content = data;
     }
 
-    if (jQuery.type(data) === 'object'){
+    if (jQuery.type(data) === 'object') {
         for (var key in data) {
-            if (jQuery.type(data[key]) == 'array'){
+            if (jQuery.type(data[key]) == 'array') {
                 for (var index in data[key]) {
                     content += data[key][index] + '</br>';
                 }
@@ -154,11 +154,11 @@ function showPopup(container, data, error, time)
         '<div class="' + classPopup + '">' + content + '</div>'
     );
 
-    if (!time && time != 0){
+    if (!time && time != 0) {
         time = 2000;
     }
 
-    if (time && time != 0){
+    if (time && time != 0) {
         setTimeout(function () {
             clearContainer(container);
         }, time);
@@ -185,7 +185,7 @@ function setAjaxLoader(container, delayTime)
 {
     var initValue = 100;
 
-    if (delayTime){
+    if (delayTime) {
         initValue = 0;
     }
 
@@ -196,7 +196,7 @@ function setAjaxLoader(container, delayTime)
             '</div>' +
         '</div>');
 
-    if (delayTime){
+    if (delayTime) {
         var progressBar = container.find('[role="progressbar"]');
         progressBar.on('load', progressBar.animate({width:100+'%'}).delay(delayTime));
     }
@@ -212,14 +212,14 @@ function setAjaxLoader(container, delayTime)
  */
 function getPreview(params) {
 
-    if (jQuery.type(params) !== 'object'){
+    if (jQuery.type(params) !== 'object') {
         var errorOptions = "Parameter 'options' must be an object!";
         console.log(errorOptions);
         alert(errorOptions);
         return '';
     }
 
-    if (!params.fileType){
+    if (!params.fileType) {
         var errorFileType = "fileType is not defined!";
         console.log(errorFileType);
         alert(errorFileType);
@@ -230,11 +230,11 @@ function getPreview(params) {
         fileUrl = '',
         baseUrl = '';
 
-    if (params.fileUrl){
+    if (params.fileUrl) {
         fileUrl = params.fileUrl;
     }
 
-    if (params.baseUrl){
+    if (params.baseUrl) {
         baseUrl = params.baseUrl;
     }
 
@@ -245,15 +245,15 @@ function getPreview(params) {
         initSourceOptions = {},
         initTrackOptions = {};
 
-    if (params.main && jQuery.type(params.main) === 'object'){
+    if (params.main && jQuery.type(params.main) === 'object') {
         customMainOptions = params.main;
     }
 
-    if (params.source && jQuery.type(params.source) === 'object'){
+    if (params.source && jQuery.type(params.source) === 'object') {
         customSourceOptions = params.source;
     }
 
-    if (params.track && jQuery.type(params.track) === 'object'){
+    if (params.track && jQuery.type(params.track) === 'object') {
         customTrackOptions = params.track;
     }
 
@@ -287,13 +287,13 @@ function getPreview(params) {
             break;
 
         case 'application':
-            if (strpos({str: fileType.split('/')[1], find: 'word', index: 1})){
+            if (strpos({str: fileType.split('/')[1], find: 'word', index: 1})) {
                 return '<img src="' + baseUrl + '/images/word.png' + '" ' + objectParamsToHtml(customMainOptions) + '>';
 
-            } else if (strpos({str: fileType.split('/')[1], find: 'excel', index: 1})){
+            } else if (strpos({str: fileType.split('/')[1], find: 'excel', index: 1})) {
                 return '<img src="' + baseUrl + '/images/excel.png' + '" ' + objectParamsToHtml(customMainOptions) + '>';
 
-            } else if (fileType.split('/')[1] == 'pdf'){
+            } else if (fileType.split('/')[1] == 'pdf') {
                 return '<img src="' + baseUrl + '/images/pdf.png' + '" ' + objectParamsToHtml(customMainOptions) + '>';
 
             } else {
@@ -330,12 +330,12 @@ function strpos(data) {
  * @param json2
  * @returns {{}}
  */
-function jsonMergeRecursive(json1, json2){
+function jsonMergeRecursive(json1, json2) {
     var out = {};
-    for(var k1 in json1){
+    for(var k1 in json1) {
         if (json1.hasOwnProperty(k1)) out[k1] = json1[k1];
     }
-    for(var k2 in json2){
+    for(var k2 in json2) {
         if (json2.hasOwnProperty(k2)) {
             if(!out.hasOwnProperty(k2)) out[k2] = json2[k2];
             else if(
@@ -356,7 +356,7 @@ function jsonMergeRecursive(json1, json2){
 function objectParamsToHtml(objectParams)
 {
     var options = '';
-    for (var index in objectParams){
+    for (var index in objectParams) {
         options += ' ' + index + '="'+ objectParams[index] + '"';
     }
     return options;

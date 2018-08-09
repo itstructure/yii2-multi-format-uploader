@@ -2,6 +2,11 @@
 
 namespace Itstructure\MFUploader\assets;
 
+/**
+ * Class MainAsset
+ *
+ * @package Itstructure\MFUploader\assets
+ */
 class MainAsset extends BaseAsset
 {
     public $css = [

@@ -15,6 +15,7 @@ class ApplicationAlbumController extends AlbumController
 {
     /**
      * Returns the name of the AppAlbum model.
+     *
      * @return string
      */
     protected function getModelName():string
@@ -24,6 +25,7 @@ class ApplicationAlbumController extends AlbumController
 
     /**
      * Returns the type of application album.
+     *
      * @return string
      */
     protected function getAlbumType():string

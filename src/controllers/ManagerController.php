@@ -8,28 +8,28 @@ use yii\base\InvalidArgumentException;
 use yii\filters\{VerbFilter, AccessControl};
 use yii\web\{Controller, BadRequestHttpException};
 use Itstructure\MFUploader\Module;
-use Itstructure\MFUploader\models\{OwnersMediafiles, Mediafile};
+use Itstructure\MFUploader\models\{OwnerMediafile, Mediafile};
 
 /**
- * Class ManagersController
- * Managers controller class to display the next managers:
+ * Class ManagerController
+ * Manager controller class to display the next managers:
  * 1. To view and select available files.
  * 2. To upload files.
  *
  * @property Module $module
  *
- * @package Itstructure\MFUploader\controllers\api
+ * @package Itstructure\MFUploader\controllers
  *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
-class ManagersController extends Controller
+class ManagerController extends Controller
 {
     /**
      * Initialize.
      */
     public function init()
     {
-        $this->layout = '@mfuploader/views/layouts/main';
+        $this->layout = '@'.Module::MODULE_NAME.'/views/layouts/main';
 
         parent::init();
     }
@@ -61,7 +61,9 @@ class ManagersController extends Controller
 
     /**
      * Get filemanager with uploaded files.
+     *
      * @throws BadRequestHttpException
+     *
      * @return string
      */
     public function actionFilemanager()
@@ -81,12 +83,12 @@ class ManagersController extends Controller
             }
 
             if (count($requestParams) > 0) {
-                $query = OwnersMediafiles::getMediaFilesQuery($requestParams)->orWhere([
-                    'not in', 'id', OwnersMediafiles::find()->select('mediafileId')->asArray()
+                $query = OwnerMediafile::getMediaFilesQuery($requestParams)->orWhere([
+                    'not in', 'id', OwnerMediafile::find()->select('mediafileId')->asArray()
                 ]);
             } else {
                 $query = Mediafile::find()->where([
-                    'not in', 'id', OwnersMediafiles::find()->select('mediafileId')->asArray()
+                    'not in', 'id', OwnerMediafile::find()->select('mediafileId')->asArray()
                 ])->orderBy('id DESC');
             }
 
@@ -114,7 +116,9 @@ class ManagersController extends Controller
 
     /**
      * Get uploadmanager for uploading files.
+     *
      * @throws BadRequestHttpException
+     *
      * @return string
      */
     public function actionUploadmanager()
@@ -123,8 +127,8 @@ class ManagersController extends Controller
             return $this->render('uploadmanager', [
                 'manager' => 'uploadmanager',
                 'fileAttributeName' => $this->module->fileAttributeName,
-                'sendSrc' => Module::getSendSrc($this->module->defaultStorageType),
-                'deleteSrc' => Module::getDeleteSrc($this->module->defaultStorageType),
+                'sendUrl' => Module::getSendUrl($this->module->defaultStorageType),
+                'deleteUrl' => Module::getDeleteUrl($this->module->defaultStorageType),
             ]);
         } catch (\Exception $e) {
             throw new BadRequestHttpException($e->getMessage(), $e->getCode());

@@ -23,7 +23,7 @@ use Itstructure\MFUploader\components\{LocalUploadComponent, S3UploadComponent, 
  * @property array $thumbStubUrls Default thumbnail stub urls according with file type.
  * @property bool $enableCsrfValidation Csrf validation.
  * @property string $defaultStorageType Default storage type. Can be 'local' or 's3'.
- * @property View $_view View component to render content.
+ * @property View $view View component to render content.
  *
  * @package Itstructure\MFUploader
  *
@@ -31,21 +31,23 @@ use Itstructure\MFUploader\components\{LocalUploadComponent, S3UploadComponent, 
  */
 class Module extends BaseModule
 {
-    const DEFAULT_THUMB_ALIAS = 'default';
-    const ORIGINAL_THUMB_ALIAS = 'original';
-    const SMALL_THUMB_ALIAS   = 'small';
-    const MEDIUM_THUMB_ALIAS  = 'medium';
-    const LARGE_THUMB_ALIAS   = 'large';
+    const MODULE_NAME = 'mfuploader';
 
-    const FILE_MANAGER_SRC   = '/mfuploader/managers/filemanager';
-    const UPLOAD_MANAGER_SRC = '/mfuploader/managers/uploadmanager';
-    const FILE_INFO_SRC      = '/mfuploader/fileinfo/index';
-    const LOCAL_SEND_SRC     = '/mfuploader/upload/local-upload/send';
-    const LOCAL_UPDATE_SRC   = '/mfuploader/upload/local-upload/update';
-    const LOCAL_DELETE_SRC   = '/mfuploader/upload/local-upload/delete';
-    const S3_SEND_SRC        = '/mfuploader/upload/s3-upload/send';
-    const S3_UPDATE_SRC      = '/mfuploader/upload/s3-upload/update';
-    const S3_DELETE_SRC      = '/mfuploader/upload/s3-upload/delete';
+    const THUMB_ALIAS_DEFAULT  = 'default';
+    const THUMB_ALIAS_ORIGINAL = 'original';
+    const THUMB_ALIAS_SMALL    = 'small';
+    const THUMB_ALIAS_MEDIUM   = 'medium';
+    const THUMB_ALIAS_LARGE    = 'large';
+
+    const URL_FILE_MANAGER   = '/'.self::MODULE_NAME.'/managers/filemanager';
+    const URL_UPLOAD_MANAGER = '/'.self::MODULE_NAME.'/managers/uploadmanager';
+    const URL_FILE_INFO      = '/'.self::MODULE_NAME.'/fileinfo/index';
+    const URL_LOCAL_SEND     = '/'.self::MODULE_NAME.'/upload/local-upload/send';
+    const URL_LOCAL_UPDATE   = '/'.self::MODULE_NAME.'/upload/local-upload/update';
+    const URL_LOCAL_DELETE   = '/'.self::MODULE_NAME.'/upload/local-upload/delete';
+    const URL_S3_SEND        = '/'.self::MODULE_NAME.'/upload/s3-upload/send';
+    const URL_S3_UPDATE      = '/'.self::MODULE_NAME.'/upload/s3-upload/update';
+    const URL_S3_DELETE      = '/'.self::MODULE_NAME.'/upload/s3-upload/delete';
 
     const BACK_URL_PARAM = '__backUrl';
 
@@ -58,18 +60,21 @@ class Module extends BaseModule
 
     /**
      * Login url.
+     *
      * @var null|string|array
      */
     public $loginUrl = null;
 
     /**
      * Array of roles to module access.
+     *
      * @var array
      */
     public $accessRoles = ['@'];
 
     /**
      * Name of the file field to load using Ajax request.
+     *
      * @var string
      */
     public $fileAttributeName = 'file';
@@ -77,6 +82,7 @@ class Module extends BaseModule
     /**
      * Preview options for som types of mediafiles according with their location.
      * See how it's done in "preview-options" config file as an example.
+     *
      * @var array
      */
     public $previewOptions = [];
@@ -84,6 +90,7 @@ class Module extends BaseModule
     /**
      * Thumbs config with their types and sizes.
      * See how it's done in "thumbs-config" config file as an example.
+     *
      * @var array of thumbnails.
      */
     public $thumbsConfig = [];
@@ -91,6 +98,7 @@ class Module extends BaseModule
     /**
      * Thumbnails name template.
      * Values can be the next: {original}, {width}, {height}, {alias}, {extension}
+     *
      * @var string
      */
     public $thumbFilenameTemplate = '{original}-{width}-{height}-{alias}.{extension}';
@@ -98,57 +106,65 @@ class Module extends BaseModule
     /**
      * Default thumbnail stub urls according with file type.
      * See how it's done in "thumb-stub-urls" config file as an example.
+     *
      * @var array
      */
     public $thumbStubUrls = [];
 
     /**
      * Csrf validation.
+     *
      * @var bool
      */
     public $enableCsrfValidation = true;
 
     /**
      * Default storage type. Can be 'local' or 's3'.
+     *
      * @var string
      */
     public $defaultStorageType = self::STORAGE_TYPE_LOCAL;
 
     /**
      * View component to render content.
+     *
      * @var View
      */
     private $_view = null;
 
     /**
      * Urls to send new files depending on the storage type.
+     *
      * @var array
      */
-    private static $sendSrcUrls = [
-        self::STORAGE_TYPE_LOCAL => self::LOCAL_SEND_SRC,
-        self::STORAGE_TYPE_S3 => self::S3_SEND_SRC,
+    private static $sendUrls = [
+        self::STORAGE_TYPE_LOCAL => self::URL_LOCAL_SEND,
+        self::STORAGE_TYPE_S3 => self::URL_S3_SEND,
     ];
 
     /**
      * Urls to update existing files depending on the storage type.
+     *
      * @var array
      */
-    private static $updateSrcUrls = [
-        self::STORAGE_TYPE_LOCAL => self::LOCAL_UPDATE_SRC,
-        self::STORAGE_TYPE_S3 => self::S3_UPDATE_SRC,
+    private static $updateUrls = [
+        self::STORAGE_TYPE_LOCAL => self::URL_LOCAL_UPDATE,
+        self::STORAGE_TYPE_S3 => self::URL_S3_UPDATE,
     ];
 
     /**
      * Urls to delete existing files depending on the storage type.
+     *
      * @var array
      */
-    private static $deleteSrcUrls = [
-        self::STORAGE_TYPE_LOCAL => self::LOCAL_DELETE_SRC,
-        self::STORAGE_TYPE_S3 => self::S3_DELETE_SRC,
+    private static $deleteUrls = [
+        self::STORAGE_TYPE_LOCAL => self::URL_LOCAL_DELETE,
+        self::STORAGE_TYPE_S3 => self::URL_S3_DELETE,
     ];
 
     /**
      * Module translations.
+     *
      * @var array|null
      */
     private static $_translations = null;
@@ -160,7 +176,7 @@ class Module extends BaseModule
     {
         parent::init();
 
-        Yii::setAlias('@mfuploader', static::getBaseDir());
+        Yii::setAlias('@'.self::MODULE_NAME.'', static::getBaseDir());
 
         if (null !== $this->loginUrl && method_exists(Yii::$app, 'getUser')) {
             Yii::$app->getUser()->loginUrl = $this->loginUrl;
@@ -200,6 +216,7 @@ class Module extends BaseModule
 
     /**
      * Get the view.
+     *
      * @return View
      */
     public function getView()
@@ -213,6 +230,7 @@ class Module extends BaseModule
 
     /**
      * Returns module root directory.
+     *
      * @return string
      */
     public static function getBaseDir(): string
@@ -222,54 +240,66 @@ class Module extends BaseModule
 
     /**
      * Get src to send new files.
+     *
      * @param string $storageType
+     *
      * @return string
+     *
      * @throws InvalidConfigException
      */
-    public static function getSendSrc(string $storageType): string
+    public static function getSendUrl(string $storageType): string
     {
-        if (!isset(self::$sendSrcUrls[$storageType])){
+        if (!isset(self::$sendUrls[$storageType])) {
             throw new InvalidConfigException('There is no such storage type in the send src urls.');
         }
 
-        return self::$sendSrcUrls[$storageType];
+        return self::$sendUrls[$storageType];
     }
 
     /**
      * Get src to update existing files.
+     *
      * @param string $storageType
+     *
      * @return string
+     *
      * @throws InvalidConfigException
      */
-    public static function getUpdateSrc(string $storageType): string
+    public static function getUpdateUrl(string $storageType): string
     {
-        if (!isset(self::$updateSrcUrls[$storageType])){
+        if (!isset(self::$updateUrls[$storageType])) {
             throw new InvalidConfigException('There is no such storage type in the update src urls.');
         }
 
-        return self::$updateSrcUrls[$storageType];
+        return self::$updateUrls[$storageType];
     }
 
     /**
      * Get src to delete existing files.
+     *
      * @param string $storageType
+     *
      * @return string
+     *
      * @throws InvalidConfigException
      */
-    public static function getDeleteSrc(string $storageType): string
+    public static function getDeleteUrl(string $storageType): string
     {
-        if (!isset(self::$deleteSrcUrls[$storageType])){
+        if (!isset(self::$deleteUrls[$storageType])) {
             throw new InvalidConfigException('There is no such storage type in the delete src urls.');
         }
 
-        return self::$deleteSrcUrls[$storageType];
+        return self::$deleteUrls[$storageType];
     }
 
     /**
      * Set thumb configuration.
+     *
      * @param string $alias
      * @param array  $config
+     *
      * @throws InvalidConfigException
+     *
      * @return ThumbConfigInterface
      *
      */
@@ -301,6 +331,7 @@ class Module extends BaseModule
 
     /**
      * Default thumb config
+     *
      * @return array
      */
     public static function getDefaultThumbConfig(): array
@@ -313,21 +344,24 @@ class Module extends BaseModule
 
     /**
      * Get preview options for som types of mediafiles according with their location.
+     *
      * @param string $fileType
      * @param string $location
+     *
      * @return array
      */
     public function getPreviewOptions(string $fileType, string $location): array
     {
-        if (null === $fileType || null === $location){
+        if (null === $fileType || null === $location) {
             return [];
         }
 
-        if (!isset($this->previewOptions[$fileType]) || !is_array($this->previewOptions[$fileType])){
+        if (!isset($this->previewOptions[$fileType]) || !is_array($this->previewOptions[$fileType])) {
             return [];
         }
 
-        if (!isset($this->previewOptions[$fileType][$location]) || !is_array($this->previewOptions[$fileType][$location])){
+        if (!isset($this->previewOptions[$fileType][$location]) ||
+            !is_array($this->previewOptions[$fileType][$location])) {
             return [];
         }
 
@@ -336,39 +370,42 @@ class Module extends BaseModule
 
     /**
      * Module translator.
+     *
      * @param       $category
      * @param       $message
      * @param array $params
      * @param null  $language
+     *
      * @return string
      */
     public static function t($category, $message, $params = [], $language = null)
     {
-        if (null === self::$_translations){
+        if (null === self::$_translations) {
             self::registerTranslations();
         }
 
-        return Yii::t('modules/mfuploader/' . $category, $message, $params, $language);
+        return Yii::t('modules/'.self::MODULE_NAME.'/' . $category, $message, $params, $language);
     }
 
     /**
      * Set i18N component.
+     *
      * @return void
      */
     private function registerTranslations(): void
     {
         self::$_translations = [
-            'modules/mfuploader/*' => [
+            'modules/'.self::MODULE_NAME.'/*' => [
                 'class'          => 'yii\i18n\PhpMessageSource',
                 'forceTranslation' => true,
                 'sourceLanguage' => Yii::$app->language,
-                'basePath'       => '@mfuploader/messages',
+                'basePath'       => '@'.self::MODULE_NAME.'/messages',
                 'fileMap'        => [
-                    'modules/mfuploader/main' => 'main.php',
-                    'modules/mfuploader/album' => 'album.php',
-                    'modules/mfuploader/filemanager' => 'filemanager.php',
-                    'modules/mfuploader/uploadmanager' => 'uploadmanager.php',
-                    'modules/mfuploader/actions' => 'actions.php',
+                    'modules/'.self::MODULE_NAME.'/main' => 'main.php',
+                    'modules/'.self::MODULE_NAME.'/album' => 'album.php',
+                    'modules/'.self::MODULE_NAME.'/filemanager' => 'filemanager.php',
+                    'modules/'.self::MODULE_NAME.'/uploadmanager' => 'uploadmanager.php',
+                    'modules/'.self::MODULE_NAME.'/actions' => 'actions.php',
                 ],
             ]
         ];
@@ -381,6 +418,7 @@ class Module extends BaseModule
 
     /**
      * File local upload component config.
+     *
      * @return array
      */
     private function getLocalUploadComponentConfig(): array
@@ -396,6 +434,7 @@ class Module extends BaseModule
 
     /**
      * File aws s3 upload component config.
+     *
      * @return array
      */
     private function getS3UploadComponentConfig(): array

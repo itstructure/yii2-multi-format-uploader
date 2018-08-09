@@ -16,7 +16,7 @@ use yii\base\InvalidArgumentException;
  *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
-class Owners extends \yii\db\ActiveRecord
+class Owner extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -61,31 +61,34 @@ class Owners extends \yii\db\ActiveRecord
 
     /**
      * Get Id's by owner.
+     *
      * @param string $nameId
      * @param array $args It can be an array of the next params: owner{string}, ownerId{int}, ownerAttribute{string}.
+     *
      * @throws InvalidArgumentException
+     *
      * @return ActiveQuery
      */
     protected static function getEntityIdsQuery(string $nameId, array $args): ActiveQuery
     {
         $conditions = [];
 
-        if (isset($args['owner'])){
-            if (!is_string($args['owner']) || empty($args['owner'])){
+        if (isset($args['owner'])) {
+            if (!is_string($args['owner']) || empty($args['owner'])) {
                 throw new InvalidArgumentException('Parameter owner must be a string.');
             }
             $conditions['owner'] = $args['owner'];
 
-            if (isset($args['ownerId'])){
-                if (!is_numeric($args['ownerId'])){
+            if (isset($args['ownerId'])) {
+                if (!is_numeric($args['ownerId'])) {
                     throw new InvalidArgumentException('Parameter ownerId must be numeric.');
                 }
                 $conditions['ownerId'] = $args['ownerId'];
             }
         }
 
-        if (isset($args['ownerAttribute'])){
-            if (!is_string($args['ownerAttribute']) || empty($args['ownerAttribute'])){
+        if (isset($args['ownerAttribute'])) {
+            if (!is_string($args['ownerAttribute']) || empty($args['ownerAttribute'])) {
                 throw new InvalidArgumentException('Parameter ownerAttribute must be a string.');
             }
             $conditions['ownerAttribute'] = $args['ownerAttribute'];
@@ -94,7 +97,7 @@ class Owners extends \yii\db\ActiveRecord
         $query = static::find()
             ->select($nameId);
 
-        if (count($conditions) > 0){
+        if (count($conditions) > 0) {
             return $query->where($conditions);
         }
 

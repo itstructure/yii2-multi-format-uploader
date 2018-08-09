@@ -107,7 +107,9 @@ abstract class CommonUploadController extends Controller
 
     /**
      * Set upload model.
+     *
      * @param UploadModelInterface $model
+     *
      * @return void
      */
     public function setUploadModel(UploadModelInterface $model): void
@@ -117,6 +119,7 @@ abstract class CommonUploadController extends Controller
 
     /**
      * Returns upload model.
+     *
      * @return UploadModelInterface
      */
     public function getUploadModel(): UploadModelInterface
@@ -126,7 +129,9 @@ abstract class CommonUploadController extends Controller
 
     /**
      * Send new file to upload it.
+     *
      * @throws BadRequestHttpException
+     *
      * @return array
      */
     public function actionSend()
@@ -136,14 +141,17 @@ abstract class CommonUploadController extends Controller
 
             return $this->actionSave(Yii::$app->request);
 
-        } catch (InvalidConfigException|UnknownMethodException|NotFoundHttpException|InvalidArgumentException|AwsException|S3Exception|\Exception $e) {
+        } catch (InvalidConfigException|UnknownMethodException|NotFoundHttpException|InvalidArgumentException|
+            AwsException|S3Exception|\Exception $e) {
             throw new BadRequestHttpException($e->getMessage(), $e->getCode());
         }
     }
 
     /**
      * Update existing file.
+     *
      * @throws BadRequestHttpException
+     *
      * @return array
      */
     public function actionUpdate()
@@ -151,7 +159,7 @@ abstract class CommonUploadController extends Controller
         try {
             $request = Yii::$app->request;
 
-            if (empty($request->post('id'))){
+            if (empty($request->post('id'))) {
                 return $this->getFailResponse(Module::t('actions', 'Error to save file.'), [
                     'errors' => Module::t('actions', 'Parameter id must be sent.')
                 ]);
@@ -163,14 +171,17 @@ abstract class CommonUploadController extends Controller
 
             return $this->actionSave($request);
 
-        } catch (InvalidConfigException|UnknownMethodException|NotFoundHttpException|InvalidArgumentException|AwsException|S3Exception|\Exception $e) {
+        } catch (InvalidConfigException|UnknownMethodException|NotFoundHttpException|InvalidArgumentException|
+            AwsException|S3Exception|\Exception $e) {
             throw new BadRequestHttpException($e->getMessage(), $e->getCode());
         }
     }
 
     /**
      * Delete the media model entry with files.
+     *
      * @throws BadRequestHttpException
+     *
      * @return array
      */
     public function actionDelete()
@@ -178,7 +189,7 @@ abstract class CommonUploadController extends Controller
         try {
             $deleted = $this->deleteMediafileEntry(Yii::$app->request->post('id'), $this->module);
 
-            if (false === $deleted){
+            if (false === $deleted) {
                 return $this->getFailResponse(
                     Module::t('actions', 'Error to delete file.')
                 );
@@ -195,31 +206,34 @@ abstract class CommonUploadController extends Controller
 
     /**
      * Provides upload or update file.
+     *
      * @throws InvalidConfigException
      * @throws BadRequestHttpException
+     *
      * @param $request
+     *
      * @return array
      */
     private function actionSave($request)
     {
-        if (!($request instanceof Request)){
+        if (!($request instanceof Request)) {
             throw new InvalidArgumentException('Param $request must be instanceof yii\web\Request.');
         }
 
-        if (null === $this->uploadModel){
+        if (null === $this->uploadModel) {
             throw new InvalidConfigException('Upload model is not defined.');
         }
 
         $this->uploadModel->setAttributes($request->post(), false);
         $this->uploadModel->setFile(UploadedFile::getInstanceByName($this->module->fileAttributeName));
 
-        if (!$this->uploadModel->save()){
+        if (!$this->uploadModel->save()) {
             return $this->getFailResponse(Module::t('actions', 'Error to save file.'), [
                 'errors' => $this->uploadModel->getErrors()
             ]);
         }
 
-        if ($this->uploadModel->getMediafileModel()->isImage()){
+        if ($this->uploadModel->getMediafileModel()->isImage()) {
             $this->uploadModel->createThumbs();
         }
 
@@ -233,7 +247,9 @@ abstract class CommonUploadController extends Controller
      * Serializes the specified data.
      * The default implementation will create a serializer based on the configuration given by [[serializer]].
      * It then uses the serializer to serialize the given data.
+     *
      * @param mixed $data the data to be serialized
+     *
      * @return mixed the serialized data.
      */
     private function serializeData($data)
@@ -243,6 +259,7 @@ abstract class CommonUploadController extends Controller
 
     /**
      * Response with uploaded file data.
+     *
      * @return array
      */
     private function getUploadResponse(): array
@@ -261,14 +278,17 @@ abstract class CommonUploadController extends Controller
 
     /**
      * Returns an intermediate model for working with the main.
+     *
      * @param int|null $id
+     *
      * @throws UnknownMethodException
      * @throws NotFoundHttpException
+     *
      * @return Mediafile
      */
     private function setMediafileModel(int $id = null): Mediafile
     {
-        if (null === $id){
+        if (null === $id) {
             return new Mediafile();
         } else {
             return $this->findMediafileModel($id);
