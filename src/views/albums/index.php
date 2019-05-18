@@ -17,7 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?php echo Html::a(Module::t('album', 'Create album'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?php echo Html::a(Module::t('album', 'Create album'), [
+            $this->params['urlPrefix'].'create'
+        ], [
+            'class' => 'btn btn-success'
+        ]) ?>
     </p>
 
     <?php echo GridView::widget([
@@ -30,7 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     /* @var $data Album */
                     return Html::a(
                         Html::encode($data->id),
-                        Url::to(['view', 'id' => $data->id])
+                        Url::to([
+                            $this->params['urlPrefix'].'view',
+                            'id' => $data->id
+                        ])
                     );
                 },
                 'format' => 'raw',
@@ -41,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     /* @var $data Album */
                     $defaultThumbImage = $data->getDefaultThumbImage();
                     return !empty($defaultThumbImage) ? Html::a($defaultThumbImage, Url::to([
-                        'view',
+                        $this->params['urlPrefix'].'view',
                         'id' => $data->id
                     ])) : '';
                 },
@@ -53,7 +60,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     /* @var $data Album */
                     return Html::a(
                         Html::encode($data->title),
-                        Url::to(['view', 'id' => $data->id])
+                        Url::to([
+                            $this->params['urlPrefix'].'view',
+                            'id' => $data->id
+                        ])
                     );
                 },
                 'format' => 'raw',
@@ -84,6 +94,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'yii\grid\ActionColumn',
                 'header' => Module::t('main', 'Actions'),
                 'template' => '{view} {update} {delete}',
+                'urlCreator'=>function($action, $model, $key, $index){
+                    return Url::to([
+                        $this->params['urlPrefix'].$action,
+                        'id' => $model->id
+                    ]);
+                }
             ],
         ],
     ]); ?>

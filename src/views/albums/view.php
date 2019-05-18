@@ -18,7 +18,7 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = [
     'label' => Module::t('album', ucfirst($model->getFileType($model->type)).' albums'),
     'url' => [
-        'index'
+        $this->params['urlPrefix'].'index'
     ]
 ];
 $this->params['breadcrumbs'][] = $this->title;
@@ -37,8 +37,15 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="album-view">
 
     <p>
-        <?php echo Html::a(Module::t('main', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?php echo Html::a(Module::t('main', 'Delete'), ['delete', 'id' => $model->id], [
+        <?php echo Html::a(Module::t('main', 'Update'), [
+            $this->params['urlPrefix'].'update', 'id' => $model->id
+        ], [
+            'class' => 'btn btn-primary'
+        ]) ?>
+
+        <?php echo Html::a(Module::t('main', 'Delete'), [
+            $this->params['urlPrefix'].'delete', 'id' => $model->id
+        ], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Module::t('main', 'Are you sure you want to do this action?'),

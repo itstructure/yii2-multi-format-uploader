@@ -1,5 +1,9 @@
 ### CHANGE LOG:
 
+**2.1.0 May 18, 2019:**
+- Add urlPrefix parameter in to AlbumController for redirect and view links.
+- Add urlPrefixNeighbor parameter in to AlbumController for view links of neighbor entity.
+
 **2.0.1 August 9, 2018:**
 - Delete duplicates and optimize code.
 

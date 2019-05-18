@@ -21,6 +21,8 @@ use Itstructure\MFUploader\traits\MediaFilesTrait;
  *
  * @property Album $model Model object record.
  * @property Module $module
+ * @property string $urlPrefix Url prefix for redirect and view links.
+ * @property string $urlPrefixNeighbor Url prefix for redirect and view links of neighbor entity.
  *
  * @package Itstructure\MFUploader\controllers\album
  *
@@ -29,6 +31,20 @@ use Itstructure\MFUploader\traits\MediaFilesTrait;
 abstract class AlbumController extends Controller
 {
     use MediaFilesTrait;
+
+    /**
+     * Url prefix for redirect and view links.
+     *
+     * @var string
+     */
+    protected $urlPrefix = '';
+
+    /**
+     * Url prefix for redirect and view links of neighbor entity.
+     *
+     * @var string
+     */
+    protected $urlPrefixNeighbor = '';
 
     /**
      * Model object record.
@@ -61,6 +77,19 @@ abstract class AlbumController extends Controller
         $this->viewPath = '@'.Module::MODULE_NAME.'/views/albums';
 
         parent::init();
+    }
+
+    /**
+     * @param \yii\base\Action $action
+     *
+     * @return bool
+     */
+    public function beforeAction($action)
+    {
+        $this->view->params['urlPrefix']         = $this->urlPrefix;
+        $this->view->params['urlPrefixNeighbor'] = $this->urlPrefixNeighbor;
+
+        return parent::beforeAction($action);
     }
 
     /**
@@ -182,7 +211,7 @@ abstract class AlbumController extends Controller
 
         if ($this->model->load(Yii::$app->request->post()) && $this->model->save()) {
             return $this->redirect([
-                'view',
+                $this->urlPrefix.'view',
                 'id' => $this->model->id
             ]);
         }
@@ -214,7 +243,7 @@ abstract class AlbumController extends Controller
             }
 
             return $this->redirect([
-                'view',
+                $this->urlPrefix.'view',
                 'id' => $this->model->id
             ]);
         }
@@ -257,7 +286,7 @@ abstract class AlbumController extends Controller
         $this->deleteMediafiles($model->type, $model->id, $this->module);
 
         if (false !== $model->delete()) {
-            return $this->redirect(['index']);
+            return $this->redirect([$this->urlPrefix.'index']);
         }
 
         throw new BadRequestHttpException('Record is not deleted.');
