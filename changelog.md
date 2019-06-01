@@ -1,5 +1,9 @@
 ### CHANGE LOG:
 
+**2.1.1 June 01, 2019:**
+- Set ability for collable type of preview options location parameter.
+  Used in **getPreviewOptions()** module method if **is_callable($previewOptions[$location])**.
+
 **2.1.0 May 18, 2019:**
 - Add urlPrefix parameter in to AlbumController for redirect and view links.
 - Add urlPrefixNeighbor parameter in to AlbumController for view links of neighbor entity.

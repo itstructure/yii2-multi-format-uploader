@@ -605,7 +605,7 @@ class Mediafile extends ActiveRecord
         string $fileType) {
 
         return null === $location ?
-            $options : ArrayHelper::merge($module->getPreviewOptions($fileType, $location), $options);
+            $options : ArrayHelper::merge($module->getPreviewOptions($fileType, $location, $this), $options);
     }
 
     /**

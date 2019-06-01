@@ -9,6 +9,7 @@ use yii\base\{Module as BaseModule, InvalidConfigException};
 use Imagine\Image\ImageInterface;
 use Itstructure\MFUploader\interfaces\ThumbConfigInterface;
 use Itstructure\MFUploader\components\{LocalUploadComponent, S3UploadComponent, ThumbConfig};
+use Itstructure\MFUploader\models\Mediafile;
 
 /**
  * Multi format uploader module class.
@@ -347,10 +348,11 @@ class Module extends BaseModule
      *
      * @param string $fileType
      * @param string $location
+     * @param Mediafile|null $mediafile
      *
      * @return array
      */
-    public function getPreviewOptions(string $fileType, string $location): array
+    public function getPreviewOptions(string $fileType, string $location, Mediafile $mediafile = null): array
     {
         if (null === $fileType || null === $location) {
             return [];
@@ -362,11 +364,24 @@ class Module extends BaseModule
 
         $previewOptions = $this->previewOptions[$fileType];
 
-        if (!isset($previewOptions[$location]) || !is_array($previewOptions[$location])) {
+        if (!isset($previewOptions[$location])) {
             return [];
         }
 
-        return $previewOptions[$location];
+        $result = [];
+
+        if (is_callable($previewOptions[$location])) {
+            $result = call_user_func($previewOptions[$location], $mediafile);
+
+            if (!is_array($result)) {
+                return [];
+            }
+
+        } else if (is_array($previewOptions[$location])) {
+            $result = $previewOptions[$location];
+        }
+
+        return $result;
     }
 
     /**

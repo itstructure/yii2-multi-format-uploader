@@ -10,11 +10,11 @@ use Itstructure\MFUploader\interfaces\UploadModelInterface;
  *      existing - if view template renders files, which are exist;
  *      fileinfo - for "fileinfo/index" view template of "filemanager";
  *      fileitem - for "_fileItem" view template of "filemanager".
- * Each location parametr(array key) must contain mainTag attribute.
+ * Each location parameter(array key) must contain mainTag attribute.
  * mainTag - main preview html tag. Can contain different html tag options.
  *           And also can contain "alias" from the number of module constant aliases:
  *           default, original, small, medium, large.
- * Else each location parametr(array key) can contain addition attributes:
+ * Else each location parameter(array key) can contain addition attributes:
  *      leftTag - tag that is located to the left of the "mainTag";
  *      rightTag - tag that is located to the right of the "mainTag";
  *      externalTag - tag in which the mainTag with leftTag and rightTag are embedded.
@@ -23,6 +23,8 @@ use Itstructure\MFUploader\interfaces\UploadModelInterface;
  * options - html options of addition tag.
  * You can insert configurations values of addition tags through the third parameter
  * of getPreview() function from Mediafile model.
+ *
+ * Location parameter can be collable function.
  *
  * @author Andrey Girnik <girnikandrey@gmail.com>
  */
