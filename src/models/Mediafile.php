@@ -123,8 +123,11 @@ class Mediafile extends ActiveRecord
     {
 
         if ($this->_module === null) {
+            $this->_module = \Yii::$app->getModule(Module::MODULE_NAME);
 
-            $this->_module = /** @scrutinizer ignore-call */ Module::getInstance();
+            if (empty($this->_module)) {
+                $this->_module = Module::getInstance();
+            }
         }
 
         return $this->_module;

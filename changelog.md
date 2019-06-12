@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**2.1.2 June 12, 2019:**
+- Optimize getting module object from a mediafile in **getModule()** function.
+
 **2.1.1 June 01, 2019:**
 - Set ability for collable type of preview options location parameter.
   Used in **getPreviewOptions()** module method if **is_callable($previewOptions[$location])**.
