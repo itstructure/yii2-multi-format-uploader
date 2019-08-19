@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**2.1.4 August 19, 2019:**
+- Upgrade of the copyright time and add a personal site link.
+
 **2.1.3 August 19, 2019:**
 - Bug fix for set an unique name of uploading file. Used **microtime()** in ```LocalUpload``` and ```S3Upload``` models.
 

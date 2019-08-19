@@ -24,6 +24,8 @@ MFUploader module provides the following options:
 To work with image binary content it uses [Yii2 imagine](https://github.com/yiisoft/yii2-imagine).
 To work with Amazon it uses [AWS SDK](https://github.com/aws/aws-sdk-php).
 
+Addition module description you can see in my [Personal site](https://pack-develop.info/en/product/6).
+
 2 Dependencies
 ----------------------------
 
@@ -38,12 +40,12 @@ To work with Amazon it uses [AWS SDK](https://github.com/aws/aws-sdk-php).
 
 Via composer:
 
-```composer require itstructure/yii2-multi-format-uploader ^2.1.3```
+```composer require itstructure/yii2-multi-format-uploader ^2.1.4```
 
 or in section **require** of composer.json file set the following:
 ```
 "require": {
-    "itstructure/yii2-multi-format-uploader": "^2.1.3"
+    "itstructure/yii2-multi-format-uploader": "^2.1.4"
 }
 ```
 and command ```composer install```, if you install yii2 project extensions first,
@@ -398,6 +400,6 @@ To work with that, you must set just the routes in application configuration.
 License
 ----------------------------
 
-Copyright © 2018 Andrey Girnik girnikandrey@gmail.com.
+Copyright © 2018-2019 Andrey Girnik girnikandrey@gmail.com.
 
 Licensed under the [MIT license](http://opensource.org/licenses/MIT). See LICENSE.txt for details.
