@@ -158,10 +158,10 @@ class S3Upload extends BaseUpload implements UploadModelInterface
 
         $this->uploadDir = $uploadDir .
             self::BUCKET_DIR_SEPARATOR . substr(md5(time()), 0, self::DIR_LENGTH_FIRST) .
-            self::BUCKET_DIR_SEPARATOR . substr(md5(time()+1), 0, self::DIR_LENGTH_SECOND);
+            self::BUCKET_DIR_SEPARATOR . substr(md5(microtime().$this->file->tempName), 0, self::DIR_LENGTH_SECOND);
 
         $this->outFileName = $this->renameFiles ?
-            md5(time()+2).'.'.$this->file->extension :
+            md5(md5(microtime()).$this->file->tempName).'.'.$this->file->extension :
             Inflector::slug($this->file->baseName).'.'. $this->file->extension;
 
         $this->bucketForUpload = null !== $this->owner && isset($this->s3Buckets[$this->owner]) ?
