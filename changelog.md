@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**2.1.5 June 9, 2020:**
+- Documentation upgrade. Change link to personal site.
+
 **2.1.4 August 19, 2019:**
 - Upgrade of the copyright time and add a personal site link.
 
