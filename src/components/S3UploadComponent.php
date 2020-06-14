@@ -91,7 +91,7 @@ class S3UploadComponent extends BaseUploadComponent implements UploadComponentIn
      */
     public function init()
     {
-        if (null === $this->credentials && !is_callable($this->credentials)) {
+        if (!is_array($this->credentials) && !is_callable($this->credentials)) {
             throw new InvalidConfigException('Credentials are not defined correctly.');
         }
 

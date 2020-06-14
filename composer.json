@@ -9,7 +9,7 @@
         "yiisoft/yii2-bootstrap": "^2.0",
         "yiisoft/yii2-imagine": "~2.1.0",
         "aws/aws-sdk-php": "~3.55.7",
-        "itstructure/yii2-field-widgets": "^1.2.0"
+        "itstructure/yii2-field-widgets": "^1.2.2"
     },
     "license": "MIT",
     "authors": [

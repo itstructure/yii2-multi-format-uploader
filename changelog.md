@@ -1,5 +1,10 @@
 ### CHANGE LOG:
 
+**2.2.0 June 15, 2020:**
+- Change saving local file **url** to DB.
+- Add **publicBaseUrl** param to Module for full local files url.
+- Add **getViewUrl()** to getting file's url with a public base url just for local storage.
+
 **2.1.5 June 9, 2020:**
 - Documentation upgrade. Change link to personal site.
 

@@ -31,7 +31,6 @@ Addition module description you can see in my [Personal site](https://pack-devel
 
 - php >= 7.1
 - composer
-- MySql >= 5.5
 
 3 Installation
 ----------------------------
@@ -40,12 +39,12 @@ Addition module description you can see in my [Personal site](https://pack-devel
 
 Via composer:
 
-```composer require itstructure/yii2-multi-format-uploader ^2.1.4```
+```composer require itstructure/yii2-multi-format-uploader ~2.2.0```
 
 or in section **require** of composer.json file set the following:
 ```
 "require": {
-    "itstructure/yii2-multi-format-uploader": "^2.1.4"
+    "itstructure/yii2-multi-format-uploader": "~2.2.0"
 }
 ```
 and command ```composer install```, if you install yii2 project extensions first,
@@ -185,7 +184,8 @@ use Itstructure\MFUploader\components\{
         'components' => [ // CUSTOM
             'local-upload-component' => [ // CUSTOM
                 'class' => LocalUploadComponent::class,
-                'checkExtensionByMimeType' => false
+                'checkExtensionByMimeType' => false,
+                'uploadRoot' => dirname($_SERVER['SCRIPT_FILENAME'])
             ],
             's3-upload-component' => [ // CUSTOM
                 'class' => S3UploadComponent::class,
@@ -195,9 +195,16 @@ use Itstructure\MFUploader\components\{
                 's3DefaultBucket' => 'bucketname',
             ],
         ],
+        'publicBaseUrl' => 'http://your-site-address.com'
     ],
 ],
 ```
+
+Here ```publicBaseUrl``` for example can be a project domain (```http://your-site-address.com```).
+If we have ```url``` in ```mediafiles``` table ```\uploads\images\imagealbum\0d\3890\a947f268d6f9fd02d8a0d7e147da922c.jpg```, and we use **getViewUrl()** function from a ```mediafile``` model for local files, 
+then for example a result link to image for ```src``` attribute of ```<img>``` tag will be:
+
+```http://your-site-address.com/uploads/images/imagealbum/0d/3890/a947f268d6f9fd02d8a0d7e147da922c.jpg```
 
 **Note:** It is not necessary to configure two components: ```local-upload-component``` and ```s3-upload-component```.
 You must configure minimum one component, according with the ```defaultStorageType```.
