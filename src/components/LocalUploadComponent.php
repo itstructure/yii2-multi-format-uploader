@@ -35,12 +35,12 @@ class LocalUploadComponent extends BaseUploadComponent implements UploadComponen
      * @var string
      */
     public $uploadDirs = [
-        UploadModelInterface::FILE_TYPE_IMAGE => 'uploads'.DIRECTORY_SEPARATOR.'images',
-        UploadModelInterface::FILE_TYPE_AUDIO => 'uploads'.DIRECTORY_SEPARATOR.'audio',
-        UploadModelInterface::FILE_TYPE_VIDEO => 'uploads'.DIRECTORY_SEPARATOR.'video',
-        UploadModelInterface::FILE_TYPE_APP => 'uploads'.DIRECTORY_SEPARATOR.'application',
-        UploadModelInterface::FILE_TYPE_TEXT => 'uploads'.DIRECTORY_SEPARATOR.'text',
-        UploadModelInterface::FILE_TYPE_OTHER => 'uploads'.DIRECTORY_SEPARATOR.'other',
+        UploadModelInterface::FILE_TYPE_IMAGE => DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'images',
+        UploadModelInterface::FILE_TYPE_AUDIO => DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'audio',
+        UploadModelInterface::FILE_TYPE_VIDEO => DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'video',
+        UploadModelInterface::FILE_TYPE_APP => DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'application',
+        UploadModelInterface::FILE_TYPE_TEXT => DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'text',
+        UploadModelInterface::FILE_TYPE_OTHER => DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'other',
     ];
 
     /**

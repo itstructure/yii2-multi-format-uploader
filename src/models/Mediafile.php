@@ -295,7 +295,7 @@ class Mediafile extends ActiveRecord
      */
     public function getAudioPreview(array $mainTagOptions): string
     {
-        return Html::audio($this->url, ArrayHelper::merge([
+        return Html::audio($this->getViewUrl(), ArrayHelper::merge([
                 'source' => [
                     'type' => $this->type
                 ]
@@ -312,7 +312,7 @@ class Mediafile extends ActiveRecord
      */
     public function getVideoPreview(array $mainTagOptions): string
     {
-        return Html::video($this->url, ArrayHelper::merge([
+        return Html::video($this->getViewUrl(), ArrayHelper::merge([
                 'source' => [
                     'type' => $this->type
                 ]
@@ -406,7 +406,7 @@ class Mediafile extends ActiveRecord
             $root = DIRECTORY_SEPARATOR;
         }
 
-        return $root . $this->getModule()->thumbStubUrls[UploadModelInterface::FILE_TYPE_APP];
+        return $root . $this->getModule()->thumbStubUrls[UploadModelInterface::FILE_TYPE_TEXT];
     }
 
     /**
@@ -448,12 +448,19 @@ class Mediafile extends ActiveRecord
     public function getThumbUrl(string $alias): string
     {
         if ($alias === Module::THUMB_ALIAS_ORIGINAL) {
-            return $this->url;
+            $url = $this->getViewUrl();
+
+        } else {
+            $thumbs = $this->getThumbs();
+
+            $url = !empty($thumbs[$alias]) ? $thumbs[$alias] : '';
         }
 
-        $thumbs = $this->getThumbs();
+        if (empty($url)) {
+            return '';
+        }
 
-        return !empty($thumbs[$alias]) ? $thumbs[$alias] : '';
+        return $this->getViewUrl($url);
     }
 
     /**
@@ -589,6 +596,31 @@ class Mediafile extends ActiveRecord
     public function isWord(): bool
     {
         return strpos($this->type, UploadModelInterface::FILE_TYPE_APP_WORD) !== false;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    public function getFullPublicUrl(string $url): string
+    {
+        return rtrim(rtrim($this->getModule()->publicBaseUrl, '/'), '\\') . '/' . ltrim(str_replace('\\', '/', $url), '/');
+    }
+
+    /**
+     * If storage is local, public base url will be linked with a url from DB.
+     * It is useful for html templates.
+     *
+     * @param string|null $url
+     *
+     * @return string
+     */
+    public function getViewUrl(string $url = null): string
+    {
+        $url = empty($url) ? $this->url : $url;
+
+        return $this->storage == Module::STORAGE_TYPE_LOCAL ? $this->getFullPublicUrl($url) : $url;
     }
 
     /**

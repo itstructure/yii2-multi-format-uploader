@@ -268,7 +268,7 @@ abstract class CommonUploadController extends Controller
 
         return [
             'id'            => $this->uploadModel->getId(),
-            'url'           => $mediafileModel->url,
+            'url'           => $mediafileModel->getViewUrl(),
             'thumbnailUrl'  => $mediafileModel->getDefaultThumbUrl(UploadmanagerAsset::register($this->view)->baseUrl),
             'name'          => $mediafileModel->filename,
             'type'          => $mediafileModel->type,

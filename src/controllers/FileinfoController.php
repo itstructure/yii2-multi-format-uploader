@@ -78,11 +78,11 @@ class FileinfoController extends Controller
         if ($model->isImage()) {
             $urlToSetFile = $model->getThumbUrl(Module::THUMB_ALIAS_MEDIUM);
             if (empty($urlToSetFile)) {
-                $urlToSetFile = $model->url;
+                $urlToSetFile = $model->getViewUrl();
             }
 
         } else {
-            $urlToSetFile = $model->url;
+            $urlToSetFile = $model->getViewUrl();
         }
 
         // Set width to set file by Java script.

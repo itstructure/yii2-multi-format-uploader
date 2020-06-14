@@ -40,7 +40,7 @@ $baseUrl = FileSetterAsset::register($this)->baseUrl;
                         'externalTag' => [
                             'name' => 'a',
                             'options' => [
-                                'href' => $mediafile->url,
+                                'href' => $mediafile->getViewUrl(),
                                 'target' => '_blank'
                             ]
                         ]

@@ -24,6 +24,7 @@ use Itstructure\MFUploader\models\Mediafile;
  * @property array $thumbStubUrls Default thumbnail stub urls according with file type.
  * @property bool $enableCsrfValidation Csrf validation.
  * @property string $defaultStorageType Default storage type. Can be 'local' or 's3'.
+ * @property string $publicBaseUrl Public base project url, to set before media files url.
  * @property View $view View component to render content.
  *
  * @package Itstructure\MFUploader
@@ -125,6 +126,13 @@ class Module extends BaseModule
      * @var string
      */
     public $defaultStorageType = self::STORAGE_TYPE_LOCAL;
+
+    /**
+     * Public base project url, to set before media files url.
+     *
+     * @var string
+     */
+    public $publicBaseUrl = '';
 
     /**
      * View component to render content.

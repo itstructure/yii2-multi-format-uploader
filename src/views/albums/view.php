@@ -115,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'externalTag' => [
                                             'name' => 'a',
                                             'options' => [
-                                                'href' => $mediafile->url,
+                                                'href' => $mediafile->getViewUrl(),
                                                 'target' => '_blank'
                                             ]
                                         ]
