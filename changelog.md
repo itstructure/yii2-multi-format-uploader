@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**2.2.1 June 20, 2020:**
+- Bug fix for **getThumbUrl()** method in ```Mediafile``` model.
+
 **2.2.0 June 15, 2020:**
 - Change saving local file **url** to DB.
 - Add **publicBaseUrl** param to Module for full local files url.

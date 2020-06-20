@@ -448,7 +448,7 @@ class Mediafile extends ActiveRecord
     public function getThumbUrl(string $alias): string
     {
         if ($alias === Module::THUMB_ALIAS_ORIGINAL) {
-            $url = $this->getViewUrl();
+            return $this->getViewUrl();
 
         } else {
             $thumbs = $this->getThumbs();
