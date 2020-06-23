@@ -1,8 +1,7 @@
 Yii2 Multi format uploader module
 ==============
 
-1 Introduction
-----------------------------
+## Introduction
 
 [![Latest Stable Version](https://poser.pugx.org/itstructure/yii2-multi-format-uploader/v/stable)](https://packagist.org/packages/itstructure/yii2-multi-format-uploader)
 [![Latest Unstable Version](https://poser.pugx.org/itstructure/yii2-multi-format-uploader/v/unstable)](https://packagist.org/packages/itstructure/yii2-multi-format-uploader)
@@ -26,36 +25,36 @@ To work with Amazon it uses [AWS SDK](https://github.com/aws/aws-sdk-php).
 
 Addition module description you can see in my [Personal site](https://pack-develop.info/en/product/yii2-multi-format-uploader).
 
-2 Dependencies
-----------------------------
+## Dependencies
 
 - php >= 7.1
 - composer
 
-3 Installation
-----------------------------
+## Installation
 
-### 3.1 Base install
+### Base install
 
 Via composer:
 
-```composer require itstructure/yii2-multi-format-uploader ~2.2.1```
+`composer require itstructure/yii2-multi-format-uploader ~2.2.2`
 
 or in section **require** of composer.json file set the following:
-```
+
+```json
 "require": {
-    "itstructure/yii2-multi-format-uploader": "~2.2.1"
+    "itstructure/yii2-multi-format-uploader": "~2.2.2"
 }
 ```
-and command ```composer install```, if you install yii2 project extensions first,
 
-or command ```composer update```, if all yii2 project extensions are already installed.
+and command `composer install`, if you install yii2 project extensions first,
 
-### 3.2 If you are testing this package from local server directory
+or command `composer update`, if all yii2 project extensions are already installed.
 
-In application ```composer.json``` file set the repository, like in example:
+### If you are testing this package from local server directory
 
-```
+In application `composer.json` file set the repository, like in example:
+
+```json
 "repositories": [
     {
         "type": "path",
@@ -73,9 +72,9 @@ Here,
 
 Then run command:
 
-```composer require itstructure/yii2-multi-format-uploader:dev-master --prefer-source```
+`composer require itstructure/yii2-multi-format-uploader:dev-master --prefer-source`
 
-### 3.3 Apply module migrations
+### Apply module migrations
 
 For that make next, **if not already done**:
     
@@ -84,6 +83,7 @@ For that make next, **if not already done**:
     ```php
     use Itstructure\MFUploader\Module as MFUModule;
     ```
+    
     ```php
     'modules' => [
         'mfuploader' => [
@@ -118,26 +118,23 @@ For that make next, **if not already done**:
     
 - Run command in console:
 
-    ```
-    yii migrate --migrationPath=@mfuploader/migrations
-    ```
+    `yii migrate --migrationPath=@mfuploader/migrations`
     
     The data base structure:
     
-    ![Data base structure](db_structure.jpg)
+    ![Data base structure](https://github.com/itstructure/yii2-multi-format-uploader/blob/master/db_structure.jpg)
 
-4 Usage
-----------------------------
+## Usage
 
-### 4.1 Main properties
+### Main properties
 
-The **name** of module: ```mfuploader```
+The **name** of module: `mfuploader`
 
-The **namespace** for used classes: ```Itstructure\MFUploader```.
+The **namespace** for used classes: `Itstructure\MFUploader`.
 
-The **alias** to access in to module root directory: ```@mfuploader```.
+The **alias** to access in to module root directory: `@mfuploader`.
 
-### 4.2 Application config
+### Application config
 
 Base application config must be like in example below:
 
@@ -200,18 +197,18 @@ use Itstructure\MFUploader\components\{
 ],
 ```
 
-Here ```publicBaseUrl``` for example can be a project domain (```http://your-site-address.com```).
-If we have ```url``` in ```mediafiles``` table ```\uploads\images\imagealbum\0d\3890\a947f268d6f9fd02d8a0d7e147da922c.jpg```, and we use **getViewUrl()** function from a ```mediafile``` model for local files, 
-then for example a result link to image for ```src``` attribute of ```<img>``` tag will be:
+Here `publicBaseUrl` for example can be a project domain (`http://your-site-address.com`).
+If we have `url` in `mediafiles` table `\uploads\images\imagealbum\0d\3890\a947f268d6f9fd02d8a0d7e147da922c.jpg`, and we use **getViewUrl()** function from a `mediafile` model for local files, 
+then for example a result link to image for `src` attribute of `<img>` tag will be:
 
-```http://your-site-address.com/uploads/images/imagealbum/0d/3890/a947f268d6f9fd02d8a0d7e147da922c.jpg```
+`http://your-site-address.com/uploads/images/imagealbum/0d/3890/a947f268d6f9fd02d8a0d7e147da922c.jpg`
 
-**Note:** It is not necessary to configure two components: ```local-upload-component``` and ```s3-upload-component```.
-You must configure minimum one component, according with the ```defaultStorageType```.
+**Note:** It is not necessary to configure two components: `local-upload-component` and `s3-upload-component`.
+You must configure minimum one component, according with the `defaultStorageType`.
 
-### 4.3 File field for the view template
+### File field for the view template
 
-**File field** must be rendered by ```FileSetter``` widget.
+**File field** must be rendered by `FileSetter` widget.
 
 It is necessary to send an ID or URL of uploaded mediafile to you application controller and set in 
 model.
@@ -224,6 +221,7 @@ use Itstructure\MFUploader\widgets\FileSetter;
 use Itstructure\MFUploader\Module as MFUModule;
 use Itstructure\MFUploader\interfaces\UploadModelInterface;
 ```
+
 ```html
 Container to display selected image.
 <div class="media">
@@ -235,6 +233,7 @@ Container to display selected image.
     </div>
 </div>
 ```
+
 ```php
 echo FileSetter::widget([
     'model' => $model,
@@ -254,32 +253,32 @@ echo FileSetter::widget([
 ]);
 ```
 
-### 4.4 Configure upload components
+### Configure upload components
 
-#### 4.4.1 Base attributes in BaseUploadComponent
+#### Base attributes in BaseUploadComponent
 
 **Note:** BaseUploadComponent - the base class, which LocalUploadComponent and S3UploadComponent extend.
 
-To understand the principles of configure the base attributes, see public attributes in ```components\BaseUploadComponent``` class.
-But it may be difficult to configure ```thumbsConfig``` and ```thumbFilenameTemplate```.
-Attribute ```thumbsConfig``` takes the values according with the next chain:
-1. From the default config file ```config/thumbs-config.php``` in module **init()** function.
-2. Can be rewrited by custom during module ```thumbsConfig``` attribute.
-3. Previous config result inserted in to the ```LocalUploadComponent``` and ```S3UploadComponent``` module components.
-4. Configuration ```thumbsConfig``` in module components can be rewrited by custom during component ```thumbsConfig``` attribute.
+To understand the principles of configure the base attributes, see public attributes in `components\BaseUploadComponent` class.
+But it may be difficult to configure `thumbsConfig` and `thumbFilenameTemplate`.
+Attribute `thumbsConfig` takes the values according with the next chain:
+1. From the default config file `config/thumbs-config.php` in module **init()** function.
+2. Can be rewrited by custom during module `thumbsConfig` attribute.
+3. Previous config result inserted in to the `LocalUploadComponent` and `S3UploadComponent` module components.
+4. Configuration `thumbsConfig` in module components can be rewrited by custom during component `thumbsConfig` attribute.
 
-#### 4.4.2 Attributes in LocalUploadComponent
+#### Attributes in LocalUploadComponent
 
-That is very simple. See public attributes in ```components\LocalUploadComponent``` class.
+That is very simple. See public attributes in `components\LocalUploadComponent` class.
 
-#### 4.4.3 Attributes in S3UploadComponent
+#### Attributes in S3UploadComponent
 
-See public attributes in ```components\S3UploadComponent``` class.
+See public attributes in `components\S3UploadComponent` class.
 But there are important attributes:
-- ```credentials```. Attribute to access in to Amazon web services account.
+- `credentials`. Attribute to access in to Amazon web services account.
     Can be: array, callable, and other. See https://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/credentials.html.
-- ```s3DefaultBucket``` - bucket, which you use to upload files as default.
-- ```s3Buckets``` - buckets to upload files depending on the owner. Not required.
+- `s3DefaultBucket` - bucket, which you use to upload files as default.
+- `s3Buckets` - buckets to upload files depending on the owner. Not required.
 
     config example:
     ```php
@@ -296,23 +295,24 @@ For more information of S3 configuration, see the next links:
 - https://docs.aws.amazon.com/aws-sdk-php/v3/api
 - https://github.com/aws/aws-sdk-php
 
-### 4.5 Link entities with owners
+### Link entities with owners
 
-To link entities (mediafiles and albums) with owners (pages, articles, posts e.t.c...) there is the abstract class ```behaviors\Behavior```.
+To link entities (mediafiles and albums) with owners (pages, articles, posts e.t.c...) there is the abstract class `behaviors\Behavior`.
 
-You must use child classes: ```behaviors\BehaviorMediafile``` and ```behaviors\BehaviorAlbum```.
+You must use child classes: `behaviors\BehaviorMediafile` and `behaviors\BehaviorAlbum`.
 
 Explanation by example.
 
-You have a ```catalog``` model which extends an ActiveRecord yii2 class.
+You have a `catalog` model which extends an ActiveRecord yii2 class.
 
-Use a ```behaviors\BehaviorMediafile``` and ```behaviors\BehaviorAlbum``` in **behaviors** of your ```catalog``` model to link mediafiles and albums with catalog after: **insert active record**, **update active record**, **delete active record**:
+Use a `behaviors\BehaviorMediafile` and `behaviors\BehaviorAlbum` in **behaviors** of your `catalog` model to link mediafiles and albums with catalog after: **insert active record**, **update active record**, **delete active record**:
 
 ```php
 use Itstructure\MFUploader\behaviors\{BehaviorMediafile, BehaviorAlbum};
 use Itstructure\MFUploader\interfaces\UploadModelInterface;
 use Itstructure\MFUploader\models\album\Album;
 ```
+
 ```php
 public $thumbnail;
 
@@ -339,73 +339,62 @@ public function behaviors()
 }
 ```
 
-**Note:** This block should be used in conjunction with the ```FileSetter``` widget inside the view form template!
+**Note:** This block should be used in conjunction with the `FileSetter` widget inside the view form template!
 
 Here the following happens:
 
-- If you use a "thumbnail" name of ```attribute``` param in FileSetter widget, the uploaded mediafile (thumbnail) will be linked with ```catalog``` after insert new catalog data to the data base.
-- If you use an "imageAlbum" (by Album::ALBUM_TYPE_IMAGE) name of the ```name``` attribute of dropdown or checkbox html field, the last created image album will be linked with ```catalog``` after insert new catalog data to the data base.
+- If you use a "thumbnail" name of `attribute` param in FileSetter widget, the uploaded mediafile (thumbnail) will be linked with `catalog` after insert new catalog data to the data base.
+- If you use an "imageAlbum" (by Album::ALBUM_TYPE_IMAGE) name of the `name` attribute of dropdown or checkbox html field, the last created image album will be linked with `catalog` after insert new catalog data to the data base.
 
 That works according with the next data base example structure:
 
-```Table "mediafiles"``` - record with id=20 now inserted.
+`Table "mediafiles"` - record with id=20 now inserted.
 
-```php
-| id  | ... |      created_at     |      updated_at     |
-|-----|-----|---------------------|---------------------|
-| ... | ... |         ...         |         ...         |
-| 20  | ... | 2018-05-06 21:35:04 | 2018-05-06 21:35:10 |
-```
+    | id  | ... |      created_at     |      updated_at     |
+    |-----|-----|---------------------|---------------------|
+    | ... | ... |         ...         |         ...         |
+    | 20  | ... | 2018-05-06 21:35:04 | 2018-05-06 21:35:10 |
 
-```Table "catalog"``` - record with id=10 inserted after create mediafile (id=20).
+`Table "catalog"` - record with id=10 inserted after create mediafile (id=20).
 
-```php
-| id  | ... |      created_at     |      updated_at     |
-|-----|-----|---------------------|---------------------|
-| ... | ... |         ...         |         ...         |
-| 10  | ... | 2018-05-06 21:35:20 | 2018-05-06 21:35:25 |
-```
+    | id  | ... |      created_at     |      updated_at     |
+    |-----|-----|---------------------|---------------------|
+    | ... | ... |         ...         |         ...         |
+    | 10  | ... | 2018-05-06 21:35:20 | 2018-05-06 21:35:25 |
 
-```Table "owners_mediafiles"```
+`Table "owners_mediafiles"`
 
-```php
-| mediafileId | ownerId |   owner   |  ownerAttribute  |
-|-------------|---------|-----------|------------------|
-|     ...     |   ...   |    ...    |        ...       |
-|     20      |    10   |  catalog  |     thumbnail    |
-```
+    | mediafileId | ownerId |   owner   |  ownerAttribute  |
+    |-------------|---------|-----------|------------------|
+    |     ...     |   ...   |    ...    |        ...       |
+    |     20      |    10   |  catalog  |     thumbnail    |
 
-```Table "albums"```
+`Table "albums"`
 
-```php
-| id  |     type    | ... |      created_at     |      updated_at     |
-|-----|-------------|-----|---------------------|---------------------|
-| ... |     ...     | ... |         ...         |         ...         |
-|  5  | imageAlbum  | ... | 2018-05-06 21:30:00 | 2018-05-06 21:30:05 |
-```
+    | id  |     type    | ... |      created_at     |      updated_at     |
+    |-----|-------------|-----|---------------------|---------------------|
+    | ... |     ...     | ... |         ...         |         ...         |
+    |  5  | imageAlbum  | ... | 2018-05-06 21:30:00 | 2018-05-06 21:30:05 |
 
-```Table "owners_albums"```
+`Table "owners_albums"`
 
-```php
-| albumId | ownerId |   owner   |  ownerAttribute  |
-|---------|---------|-----------|------------------|
-|   ...   |   ...   |    ...    |        ...       |
-|    5    |    10   |  catalog  |    imageAlbum    |
-```
+    | albumId | ownerId |   owner   |  ownerAttribute  |
+    |---------|---------|-----------|------------------|
+    |   ...   |   ...   |    ...    |        ...       |
+    |    5    |    10   |  catalog  |    imageAlbum    |
 
-**Note:** If you set in ```FileSetter``` widget the attributes: ```owner```, ```ownerId```, ```ownerAttribute``` - linking entity with owner will be done automatically during ajax request in **uploadmanager**.
+**Note:** If you set in `FileSetter` widget the attributes: `owner`, `ownerId`, `ownerAttribute` - linking entity with owner will be done automatically during ajax request in **uploadmanager**.
 
-### 4.6 Integrated album controllers
+### Integrated album controllers
 
-There are already integrated album controllers in the namespace: ```Itstructure\MFUploader\controllers\album```.
+There are already integrated album controllers in the namespace: `Itstructure\MFUploader\controllers\album`.
 Controllers provide the work with the next types of albums: **imageAlbum**, **audioAlbum**, **videoAlbum**, **applicationAlbum**, **textAlbum**, **otherAlbum**.
 
 For that controllers there are already the models and view templates.
 
 To work with that, you must set just the routes in application configuration.
 
-License
-----------------------------
+## License
 
 Copyright © 2018-2020 Andrey Girnik girnikandrey@gmail.com.
 
