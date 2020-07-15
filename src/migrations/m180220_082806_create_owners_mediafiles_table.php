@@ -15,8 +15,8 @@ class m180220_082806_create_owners_mediafiles_table extends Migration
         $this->createTable('owners_mediafiles', [
             'mediafileId' => $this->integer()->notNull(),
             'ownerId' => $this->integer()->notNull(),
-            'owner' => $this->string()->notNull(),
-            'ownerAttribute' => $this->string()->notNull(),
+            'owner' => $this->string(64)->notNull(),
+            'ownerAttribute' => $this->string(64)->notNull(),
             'PRIMARY KEY (`mediafileId`, `ownerId`, `owner`, `ownerAttribute`)',
         ]);
     }
@@ -26,6 +26,6 @@ class m180220_082806_create_owners_mediafiles_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('owners');
+        $this->dropTable('owners_mediafiles');
     }
 }

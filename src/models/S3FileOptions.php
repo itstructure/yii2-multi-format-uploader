@@ -47,10 +47,16 @@ class S3FileOptions extends \yii\db\ActiveRecord
             [
                 [
                     'bucket',
+                ],
+                'string',
+                'max' => 64,
+            ],
+            [
+                [
                     'prefix',
                 ],
                 'string',
-                'max' => 255,
+                'max' => 128,
             ],
             [
                 [

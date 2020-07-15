@@ -1,4 +1,4 @@
-Yii2 Multi format uploader module
+Yii2 Multi format uploader module - MFUploader
 ==============
 
 ## Introduction
@@ -23,6 +23,12 @@ MFUploader module provides the following options:
 To work with image binary content it uses [Yii2 imagine](https://github.com/yiisoft/yii2-imagine).
 To work with Amazon it uses [AWS SDK](https://github.com/aws/aws-sdk-php).
 
+Base project examples, which use this MFUploader module:
+
+[yii2-template-multilanguage](https://github.com/itstructure/yii2-template-multilanguage).
+
+[yii2-template-simple](https://github.com/itstructure/yii2-template-simple).
+
 Addition module description you can see in my [Personal site](https://pack-develop.info/en/product/yii2-multi-format-uploader).
 
 ## Dependencies
@@ -36,19 +42,7 @@ Addition module description you can see in my [Personal site](https://pack-devel
 
 Via composer:
 
-`composer require itstructure/yii2-multi-format-uploader ~2.2.2`
-
-or in section **require** of composer.json file set the following:
-
-```json
-"require": {
-    "itstructure/yii2-multi-format-uploader": "~2.2.2"
-}
-```
-
-and command `composer install`, if you install yii2 project extensions first,
-
-or command `composer update`, if all yii2 project extensions are already installed.
+`composer require itstructure/yii2-multi-format-uploader ~3.0.0`
 
 ### If you are testing this package from local server directory
 

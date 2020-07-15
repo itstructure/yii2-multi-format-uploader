@@ -62,28 +62,40 @@ class Mediafile extends ActiveRecord
             ],
             [
                 [
-                    'alt',
-                    'title',
+                    'url',
                     'description',
                     'thumbs',
+                ],
+                'string',
+            ],
+            [
+                [
                     'storage',
                 ],
                 'string',
+                'max' => 12,
+            ],
+            [
+                [
+                    'type',
+                    'alt',
+                    'title',
+                ],
+                'string',
+                'max' => 64,
+            ],
+            [
+                [
+                    'filename',
+                ],
+                'string',
+                'max' => 128,
             ],
             [
                 [
                     'size',
                 ],
                 'integer',
-            ],
-            [
-                [
-                    'filename',
-                    'type',
-                    'url',
-                ],
-                'string',
-                'max' => 255,
             ],
             [
                 [

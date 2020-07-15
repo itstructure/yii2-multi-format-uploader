@@ -42,7 +42,7 @@ abstract class Owner extends \yii\db\ActiveRecord
                     'ownerAttribute',
                 ],
                 'string',
-                'max' => 255,
+                'max' => 64,
             ],
         ];
     }

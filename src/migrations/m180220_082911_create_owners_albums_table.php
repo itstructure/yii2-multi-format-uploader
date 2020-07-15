@@ -15,8 +15,8 @@ class m180220_082911_create_owners_albums_table extends Migration
         $this->createTable('owners_albums', [
             'albumId' => $this->integer()->notNull(),
             'ownerId' => $this->integer()->notNull(),
-            'owner' => $this->string()->notNull(),
-            'ownerAttribute' => $this->string()->notNull(),
+            'owner' => $this->string(64)->notNull(),
+            'ownerAttribute' => $this->string(64)->notNull(),
             'PRIMARY KEY (`albumId`, `ownerId`, `owner`, `ownerAttribute`)',
         ]);
     }
@@ -26,6 +26,6 @@ class m180220_082911_create_owners_albums_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('owners');
+        $this->dropTable('owners_albums');
     }
 }

@@ -14,15 +14,15 @@ class m180220_081105_create_mediafiles_table extends Migration
     {
         $this->createTable('mediafiles', [
             'id' => $this->primaryKey(),
-            'filename' => $this->string()->notNull(),
-            'type' => $this->string()->notNull(),
-            'url' => $this->string()->notNull(),
-            'alt' => $this->text(),
+            'filename' => $this->string(128)->notNull(),
+            'type' => $this->string(64)->notNull(),
+            'url' => $this->text()->notNull(),
+            'alt' => $this->string(64),
             'size' => $this->integer()->notNull(),
-            'title' => $this->string(),
+            'title' => $this->string(64),
             'description' => $this->text(),
             'thumbs' => $this->text(),
-            'storage' => $this->string()->notNull(),
+            'storage' => $this->string(12)->notNull(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer(),
         ]);
