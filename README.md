@@ -31,10 +31,11 @@ Base project examples, which use this MFUploader module:
 
 Addition module description you can see in my [Personal site](https://pack-develop.info/en/product/yii2-multi-format-uploader).
 
-## Dependencies
+## Requirements
 
 - php >= 7.1
 - composer
+- MySql >= 5.5
 
 ## Installation
 
@@ -42,7 +43,7 @@ Addition module description you can see in my [Personal site](https://pack-devel
 
 Via composer:
 
-`composer require itstructure/yii2-multi-format-uploader ~3.0.0`
+`composer require itstructure/yii2-multi-format-uploader ~3.0.1`
 
 ### If you are testing this package from local server directory
 

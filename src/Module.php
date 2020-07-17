@@ -416,7 +416,7 @@ class Module extends BaseModule
      *
      * @return void
      */
-    private function registerTranslations(): void
+    private static function registerTranslations(): void
     {
         self::$_translations = [
             'modules/'.self::MODULE_NAME.'/*' => [

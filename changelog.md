@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.1 July 17, 2020:**
+- Bug fix for `registerTranslations()` method. Set it static.
+
 **3.0.0 July 15, 2020:**
 - Set `string` sizes for migration columns no more 128 (and 64) to support old MySql database versions.
 - Solve the installation issue: `Syntax error or access violation: 1071 Specified key was too long; max key length is 1000 bytes`.
