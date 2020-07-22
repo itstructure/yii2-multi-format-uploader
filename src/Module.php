@@ -193,17 +193,17 @@ class Module extends BaseModule
 
         self::registerTranslations();
 
-        $this->previewOptions = ArrayHelper::merge(
+        $this->previewOptions = array_merge(
             require __DIR__ . '/config/preview-options.php',
             $this->previewOptions
         );
 
-        $this->thumbStubUrls = ArrayHelper::merge(
+        $this->thumbStubUrls = array_merge(
             require __DIR__ . '/config/thumb-stub-urls.php',
             $this->thumbStubUrls
         );
 
-        $this->thumbsConfig = ArrayHelper::merge(
+        $this->thumbsConfig = array_merge(
             require __DIR__ . '/config/thumbs-config.php',
             $this->thumbsConfig
         );

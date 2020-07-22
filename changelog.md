@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.0.2 July 22, 2020:**
+- Use `array_merge()` instead `ArrayHelper::merge()` to merge default **thumb** and **preview** configs with custom.
+
 **3.0.1 July 17, 2020:**
 - Bug fix for `registerTranslations()` method. Set it static.
 
