@@ -78,8 +78,6 @@ class Mediafile extends ActiveRecord
             [
                 [
                     'type',
-                    'alt',
-                    'title',
                 ],
                 'string',
                 'max' => 64,
@@ -87,6 +85,8 @@ class Mediafile extends ActiveRecord
             [
                 [
                     'filename',
+                    'alt',
+                    'title',
                 ],
                 'string',
                 'max' => 128,

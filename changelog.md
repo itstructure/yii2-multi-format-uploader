@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.1.0 August 07, 2020:**
+- Increase `alt` and `title` string sizes to 128 for `mediafiles` table.
+
 **3.0.2 July 22, 2020:**
 - Use `array_merge()` instead `ArrayHelper::merge()` to merge default **thumb** and **preview** configs with custom.
 
