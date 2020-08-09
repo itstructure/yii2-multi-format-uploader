@@ -36,6 +36,7 @@ Addition module description you can see in my [Personal site](https://pack-devel
 - php >= 7.1
 - composer
 - MySql >= 5.5
+- One of the next php extensions: GD|Imagick|Gmagick
 
 ## Installation
 
@@ -43,7 +44,7 @@ Addition module description you can see in my [Personal site](https://pack-devel
 
 Via composer:
 
-`composer require itstructure/yii2-multi-format-uploader ~3.1.0`
+`composer require itstructure/yii2-multi-format-uploader ~3.1.1`
 
 ### If you are testing this package from local server directory
 

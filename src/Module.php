@@ -98,6 +98,13 @@ class Module extends BaseModule
     public $thumbsConfig = [];
 
     /**
+     * Use thumb config from /config/thumbs-config.php
+     *
+     * @var bool
+     */
+    public $useInitialThumbsConfig = true;
+
+    /**
      * Thumbnails name template.
      * Values can be the next: {original}, {width}, {height}, {alias}, {extension}
      *
@@ -203,8 +210,7 @@ class Module extends BaseModule
             $this->thumbStubUrls
         );
 
-        $this->thumbsConfig = array_merge(
-            require __DIR__ . '/config/thumbs-config.php',
+        $this->thumbsConfig = array_merge($this->useInitialThumbsConfig ? require __DIR__ . '/config/thumbs-config.php' : [],
             $this->thumbsConfig
         );
 

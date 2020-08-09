@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.1.1 August 10, 2020:**
+- Add module attribute `useInitialThumbsConfig` with default value **true**.
+
 **3.1.0 August 07, 2020:**
 - Increase `alt` and `title` string sizes to 128 for `mediafiles` table.
 
