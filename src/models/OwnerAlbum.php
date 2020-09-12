@@ -95,11 +95,7 @@ class OwnerAlbum extends Owner
      */
     public static function getAlbums(string $owner, int $ownerId, string $ownerAttribute = null)
     {
-        return static::getAlbumsQuery([
-            'owner' => $owner,
-            'ownerId' => $ownerId,
-            'ownerAttribute' => $ownerAttribute,
-        ])->all();
+        return static::getAlbumsQuery(static::buildFilterOptions($ownerId, $owner, $ownerAttribute))->all();
     }
 
     /**

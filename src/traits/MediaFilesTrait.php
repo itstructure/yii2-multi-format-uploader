@@ -35,19 +35,39 @@ trait MediaFilesTrait
      * @param string $owner
      * @param int $ownerId
      * @param Module $module
+     * @param bool $protectMultiplied
      *
      * @return void
      */
-    protected function deleteMediafiles(string $owner, int $ownerId, Module $module): void
+    protected function deleteMediafiles(string $owner, int $ownerId, Module $module, bool $protectMultiplied = true): void
     {
-        $mediafileIds = OwnerMediafile::getMediaFilesQuery([
-            'owner' => $owner,
-            'ownerId' => $ownerId,
-        ])
-        ->select('id')
-        ->all();
+        $mediafileIds = array_map(function ($data) {
+            return $data->id;
 
-        $mediafileIds = array_map(function ($data) {return $data->id;}, $mediafileIds);
+        }, OwnerMediafile::getMediaFilesQuery([
+            'owner' => $owner,
+            'ownerId' => $ownerId
+        ])
+            ->select('id')
+            ->all()
+        );
+
+        if ($protectMultiplied) {
+            $multipliedMediafileIds = array_map(function ($data) {
+                return $data->mediafileId;
+
+            }, OwnerMediafile::filterMultipliedEntityIds($owner, $ownerId, $mediafileIds));
+
+            $mediafileIds = array_filter($mediafileIds, function ($item) use ($multipliedMediafileIds) {
+                return !in_array($item, $multipliedMediafileIds);
+            });
+
+            OwnerMediafile::deleteAll([
+                'owner' => $owner,
+                'ownerId' => $ownerId,
+                'mediafileId' => $multipliedMediafileIds
+            ]);
+        }
 
         $this->deleteMediafileEntry($mediafileIds, $module);
     }

@@ -188,20 +188,6 @@ class Album extends ActiveRecord
     }
 
     /**
-     * Remove this mediafile owner.
-     *
-     * @param int    $ownerId
-     * @param string $owner
-     * @param string $ownerAttribute
-     *
-     * @return bool
-     */
-    public static function removeOwner(int $ownerId, string $owner, string $ownerAttribute): bool
-    {
-        return OwnerAlbum::removeOwner($ownerId, $owner, $ownerAttribute);
-    }
-
-    /**
      * Get album's owners.
      *
      * @return ActiveQuery

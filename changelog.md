@@ -1,5 +1,9 @@
 ### CHANGE LOG:
 
+**3.2.0 September 12, 2020:**
+- Optimize `deleteMediafiles()` method in `MediaFilesTrait`. Add protection to physical delete multiplied files, which are related more then one owner.
+- Optimize owner's entity classes.
+
 **3.1.1 August 10, 2020:**
 - Add module attribute `useInitialThumbsConfig` with default value **true**.
 

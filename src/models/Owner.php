@@ -92,19 +92,37 @@ abstract class Owner extends \yii\db\ActiveRecord
      *
      * @param int $ownerId
      * @param string $owner
-     * @param string $ownerAttribute
+     * @param string|null $ownerAttribute
      *
      * @return bool
      */
-    public static function removeOwner(int $ownerId, string $owner, string $ownerAttribute): bool
+    public static function removeOwner(int $ownerId, string $owner, string $ownerAttribute = null): bool
     {
-        $deleted = static::deleteAll([
-            'ownerId' => $ownerId,
-            'owner' => $owner,
-            'ownerAttribute' => $ownerAttribute,
-        ]);
+        $deleted = static::deleteAll(static::buildFilterOptions($ownerId, $owner, $ownerAttribute));
 
         return $deleted > 0;
+    }
+
+    /**
+     * Getting entity id's which are related with Other owners too.
+     *
+     * @param string $owner
+     * @param int $ownerId
+     * @param array $entityIds
+     *
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public static function filterMultipliedEntityIds(string $owner, int $ownerId, array $entityIds)
+    {
+        return static::find()
+            ->select(static::getModelKeyName())
+            ->where([static::getModelKeyName() => $entityIds])
+            ->andWhere([
+                'OR',
+                ['!=', 'ownerId', $ownerId],
+                ['!=', 'owner', $owner]
+            ])
+            ->all();
     }
 
     /**
@@ -121,13 +139,13 @@ abstract class Owner extends \yii\db\ActiveRecord
     {
         $conditions = [];
 
-        if (isset($args['owner'])) {
-            if (!is_string($args['owner']) || empty($args['owner'])) {
+        if (!empty($args['owner'])) {
+            if (!is_string($args['owner'])) {
                 throw new InvalidArgumentException('Parameter owner must be a string.');
             }
             $conditions['owner'] = $args['owner'];
 
-            if (isset($args['ownerId'])) {
+            if (!empty($args['ownerId'])) {
                 if (!is_numeric($args['ownerId'])) {
                     throw new InvalidArgumentException('Parameter ownerId must be numeric.');
                 }
@@ -135,8 +153,8 @@ abstract class Owner extends \yii\db\ActiveRecord
             }
         }
 
-        if (isset($args['ownerAttribute'])) {
-            if (!is_string($args['ownerAttribute']) || empty($args['ownerAttribute'])) {
+        if (!empty($args['ownerAttribute'])) {
+            if (!is_string($args['ownerAttribute'])) {
                 throw new InvalidArgumentException('Parameter ownerAttribute must be a string.');
             }
             $conditions['ownerAttribute'] = $args['ownerAttribute'];
@@ -150,5 +168,22 @@ abstract class Owner extends \yii\db\ActiveRecord
         }
 
         return $query;
+    }
+
+    /**
+     * Build filter options for some actions.
+     *
+     * @param int $ownerId
+     * @param string $owner
+     * @param string|null $ownerAttribute
+     *
+     * @return array
+     */
+    protected static function buildFilterOptions(int $ownerId, string $owner, string $ownerAttribute = null)
+    {
+        return array_merge([
+            'ownerId' => $ownerId,
+            'owner' => $owner
+        ], empty($ownerAttribute) ? [] : ['ownerAttribute' => $ownerAttribute]);
     }
 }

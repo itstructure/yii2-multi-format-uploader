@@ -3,6 +3,7 @@
 namespace Itstructure\MFUploader\behaviors;
 
 use yii\db\ActiveRecordInterface;
+use Itstructure\MFUploader\models\OwnerAlbum;
 use Itstructure\MFUploader\models\album\Album;
 
 /**
@@ -38,6 +39,6 @@ class BehaviorAlbum extends Behavior
      */
     protected function removeOwner(int $ownerId, string $owner, string $ownerAttribute): bool
     {
-        return Album::removeOwner($ownerId, $owner, $ownerAttribute);
+        return OwnerAlbum::removeOwner($ownerId, $owner, $ownerAttribute);
     }
 }

@@ -3,7 +3,7 @@
 namespace Itstructure\MFUploader\behaviors;
 
 use yii\db\ActiveRecordInterface;
-use Itstructure\MFUploader\models\Mediafile;
+use Itstructure\MFUploader\models\{Mediafile, OwnerMediafile};
 
 /**
  * Class BehaviorMediafile
@@ -38,6 +38,6 @@ class BehaviorMediafile extends Behavior
      */
     protected function removeOwner(int $ownerId, string $owner, string $ownerAttribute): bool
     {
-        return Mediafile::removeOwner($ownerId, $owner, $ownerAttribute);
+        return OwnerMediafile::removeOwner($ownerId, $owner, $ownerAttribute);
     }
 }
