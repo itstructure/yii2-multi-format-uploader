@@ -28,16 +28,16 @@ interface ThumbConfigInterface
     /**
      * Get thumb width.
      *
-     * @return int
+     * @return int|null
      */
-    public function getWidth(): int ;
+    public function getWidth();
 
     /**
      * Get thumb height.
      *
-     * @return int
+     * @return int|null
      */
-    public function getHeight(): int ;
+    public function getHeight();
 
     /**
      * Get thumb mode.

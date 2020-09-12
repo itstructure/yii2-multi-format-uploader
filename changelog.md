@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.2.1 September 12, 2020:**
+- Allow set `null` for one width or height in ThumbConfig.
+
 **3.2.0 September 12, 2020:**
 - Optimize `deleteMediafiles()` method in `MediaFilesTrait`. Add protection to physical delete multiplied files, which are related more then one owner.
 - Optimize owner's entity classes.

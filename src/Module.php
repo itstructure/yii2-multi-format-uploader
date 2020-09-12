@@ -323,9 +323,9 @@ class Module extends BaseModule
         if (!isset($config['name']) ||
             !isset($config['size']) ||
             !is_array($config['size']) ||
-            !isset($config['size'][0]) ||
-            !isset($config['size'][1])) {
-
+            (!isset($config['size'][0]) && !is_null($config['size'][0])) ||
+            (!isset($config['size'][1]) && !is_null($config['size'][1]))
+        ) {
             throw new InvalidConfigException('Error in thumb configuration.');
         }
 
@@ -335,7 +335,7 @@ class Module extends BaseModule
             'name'   => $config['name'],
             'width'  => $config['size'][0],
             'height' => $config['size'][1],
-            'mode'   => (isset($config['mode']) ? $config['mode'] : ImageInterface::THUMBNAIL_OUTBOUND),
+            'mode'   => (!empty($config['mode']) ? $config['mode'] : ImageInterface::THUMBNAIL_OUTBOUND),
         ];
 
         /* @var ThumbConfigInterface $object */

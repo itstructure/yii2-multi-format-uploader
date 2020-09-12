@@ -155,15 +155,15 @@ class LocalUpload extends BaseUpload implements UploadModelInterface
             DIRECTORY_SEPARATOR .
             $this->getThumbFilename($originalFile['filename'],
                 $originalFile['extension'],
-                $thumbConfig->alias,
-                $thumbConfig->width,
-                $thumbConfig->height
+                $thumbConfig->getAlias(),
+                $thumbConfig->getWidth(),
+                $thumbConfig->getHeight()
             );
 
         Image::thumbnail($this->uploadRoot . DIRECTORY_SEPARATOR . ltrim(ltrim($this->mediafileModel->url, '\\'), '/'),
-            $thumbConfig->width,
-            $thumbConfig->height,
-            $thumbConfig->mode
+            $thumbConfig->getWidth(),
+            $thumbConfig->getHeight(),
+            $thumbConfig->getMode()
         )->save($this->uploadRoot . DIRECTORY_SEPARATOR . ltrim(ltrim($thumbUrl, '\\'), '/'));
 
         return $thumbUrl;

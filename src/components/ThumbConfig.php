@@ -36,14 +36,14 @@ class ThumbConfig implements ThumbConfigInterface
     /**
      * Thumb width.
      *
-     * @var
+     * @var int|null
      */
     public $width;
 
     /**
      * Thumb height.
      *
-     * @var
+     * @var int|null
      */
     public $height;
 
@@ -77,9 +77,9 @@ class ThumbConfig implements ThumbConfigInterface
     /**
      * Get thumb width.
      *
-     * @return int
+     * @return int|null
      */
-    public function getWidth(): int
+    public function getWidth()
     {
         return $this->width;
     }
@@ -87,9 +87,9 @@ class ThumbConfig implements ThumbConfigInterface
     /**
      * Get thumb height.
      *
-     * @return int
+     * @return int|null
      */
-    public function getHeight(): int
+    public function getHeight()
     {
         return $this->height;
     }
