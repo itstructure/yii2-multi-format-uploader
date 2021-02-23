@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.2.2 February 23, 2021:**
+- Upgrade copyright year.
+
 **3.2.1 September 12, 2020:**
 - Allow set `null` for one width or height in ThumbConfig.
 
