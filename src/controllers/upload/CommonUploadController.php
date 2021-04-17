@@ -51,6 +51,8 @@ abstract class CommonUploadController extends Controller
     public function init()
     {
         $this->enableCsrfValidation = $this->module->enableCsrfValidation;
+
+        parent::init();
     }
 
     /**

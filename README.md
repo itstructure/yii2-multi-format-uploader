@@ -44,7 +44,7 @@ Addition module description you can see in my [Personal site](https://pack-devel
 
 Via composer:
 
-`composer require itstructure/yii2-multi-format-uploader ~3.2.2`
+`composer require itstructure/yii2-multi-format-uploader ~3.2.3`
 
 ### If you are testing this package from local server directory
 
