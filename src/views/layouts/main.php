@@ -22,7 +22,9 @@ use yii\helpers\{Html, BaseUrl};
             <div class="left">
                 <?php echo Html::a(
                     '<span class="glyphicon glyphicon-file"></span> ' . Module::t('filemanager', 'File manager'),
-                    $this->params['manager'] == 'filemanager' ? '#' : null === BaseUrl::previous(Module::BACK_URL_PARAM) ? Module::URL_FILE_MANAGER : BaseUrl::previous(Module::BACK_URL_PARAM),
+                    $this->params['manager'] == 'filemanager'
+                        ? '#'
+                        : (null === BaseUrl::previous(Module::BACK_URL_PARAM) ? Module::URL_FILE_MANAGER : BaseUrl::previous(Module::BACK_URL_PARAM)),
                     [
                         'class' => $this->params['manager'] == 'filemanager' ? 'btn btn-default active' : 'btn btn-success',
                     ])

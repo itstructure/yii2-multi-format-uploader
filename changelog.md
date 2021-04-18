@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.2.4 April 18, 2021:**
+- Bug fix: **Unparenthesized `a ? b : c ? d : e` is not supported**.
+
 **3.2.3 April 17, 2021:**
 - Bug fix: **Call to a member function validateCsrfToken() on string**.
 
