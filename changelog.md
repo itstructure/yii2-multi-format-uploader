@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.2.5 January 18, 2023:**
+- Upgrade copyright year.
+
 **3.2.4 April 18, 2021:**
 - Bug fix: **Unparenthesized `a ? b : c ? d : e` is not supported**.
 
