@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.2.7 January 23, 2023:**
+- Readme fix.
+
 **3.2.6 January 22, 2023:**
 - Improve scrutinizer config.
 
