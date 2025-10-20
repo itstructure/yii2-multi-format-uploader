@@ -5,11 +5,11 @@
     "keywords": ["yii2", "yii 2", "upload", "local", "amazon", "file", "module"],
     "require": {
         "php": ">=7.1.0",
-        "yiisoft/yii2": "2.*",
-        "yiisoft/yii2-bootstrap": "^2.0",
+        "yiisoft/yii2": "~2.0.0",
+        "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-imagine": "~2.1.0",
         "aws/aws-sdk-php": "~3.55.7",
-        "itstructure/yii2-field-widgets": "^1.2.2"
+        "itstructure/yii2-field-widgets": "^1.2.5"
     },
     "license": "MIT",
     "authors": [

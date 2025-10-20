@@ -10,7 +10,7 @@ Yii2 Multi format uploader module - MFUploader
 [![Build Status](https://scrutinizer-ci.com/g/itstructure/yii2-multi-format-uploader/badges/build.png?b=master)](https://scrutinizer-ci.com/g/itstructure/yii2-multi-format-uploader/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/itstructure/yii2-multi-format-uploader/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/itstructure/yii2-multi-format-uploader/?branch=master)
 
-**MFUploader** -- Module for the Yii2 Framework to upload some type of files to local or S3 Amazon storage.
+**MFUploader** -- Module for the Yii2 v2.0.x Framework to upload some type of files to local or S3 Amazon storage.
 MFUploader module provides the following options:
 - Upload files to local storage.
 - Upload files to remote Amazon S3 storage.
@@ -34,8 +34,8 @@ Addition module description you can see in my [Personal site](https://pack-devel
 ## Requirements
 
 - php >= 7.1
-- composer
-- MySql >= 5.5
+- composer 2
+- MySql >= 5.5 or MariaDB >= 10.1
 - One of the next php extensions: GD|Imagick|Gmagick
 
 ## Installation
@@ -44,7 +44,7 @@ Addition module description you can see in my [Personal site](https://pack-devel
 
 Via composer:
 
-`composer require itstructure/yii2-multi-format-uploader ~3.2.7`
+`composer require itstructure/yii2-multi-format-uploader ~3.2.8`
 
 ### If you are testing this package from local server directory
 
@@ -392,6 +392,6 @@ To work with that, you must set just the routes in application configuration.
 
 ## License
 
-Copyright © 2018-2023 Andrey Girnik girnikandrey@gmail.com.
+Copyright © 2018-2025 Andrey Girnik girnikandrey@gmail.com.
 
 Licensed under the [MIT license](http://opensource.org/licenses/MIT). See LICENSE.txt for details.
