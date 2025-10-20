@@ -1,5 +1,8 @@
 ### CHANGE LOG:
 
+**3.2.9 October 20, 2025:**
+- Bug fix with preview methods.
+
 **3.2.8 October 20, 2025:**
 - Improve scrutinizer config to use Composer 2.
 - Update Readme.

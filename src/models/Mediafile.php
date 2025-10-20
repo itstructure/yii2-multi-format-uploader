@@ -326,7 +326,7 @@ class Mediafile extends ActiveRecord
      *
      * @return string
      */
-    public function getAppPreview(string $baseUrl = '', array $mainTagOptions): string
+    public function getAppPreview(string $baseUrl = '', array $mainTagOptions = []): string
     {
         return Html::img($this->getAppPreviewUrl($baseUrl), $mainTagOptions);
     }
@@ -339,7 +339,7 @@ class Mediafile extends ActiveRecord
      *
      * @return string
      */
-    public function getTextPreview(string $baseUrl = '', array $mainTagOptions): string
+    public function getTextPreview(string $baseUrl = '', array $mainTagOptions = []): string
     {
         return Html::img($this->getTextPreviewUrl($baseUrl), $mainTagOptions);
     }
@@ -352,7 +352,7 @@ class Mediafile extends ActiveRecord
      *
      * @return string
      */
-    public function getOtherPreview(string $baseUrl = '', array $mainTagOptions): string
+    public function getOtherPreview(string $baseUrl = '', array $mainTagOptions = []): string
     {
         return Html::img($this->getOtherPreviewUrl($baseUrl), $mainTagOptions);
     }
